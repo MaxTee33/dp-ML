@@ -72,11 +72,22 @@ st.write("Input Data", input_df)
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
   df_scaled = scaler.fit_transform(input_df)
-  model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
-  model.fit(df_scaled)
-  cluster_labels = model.labels_
-  cluster_output = pd.DataFrame({'Cluster': cluster_labels})
-  st.write("Cluster Output:", cluster_output)
+  
+  # Check if data is being scaled properly
+  st.write("Scaled Data", df_scaled)
+
+  model = hdbscan.HDBSCAN(min_cluster_size=2)
+  
+  try:
+      model.fit(df_scaled)
+      if hasattr(model, 'labels_'):
+          cluster_labels = model.labels_
+          cluster_output = pd.DataFrame({'Cluster': cluster_labels})
+          st.write("Cluster Output:", cluster_output)
+      else:
+          st.write("Model didn't generate labels, possibly due to insufficient data.")
+  except Exception as e:
+      st.write("Error fitting HDBSCAN model:", e)
 
 
 
