@@ -45,7 +45,7 @@ with st.expander('HDBSCAN'):
   model = hdbscan.HDBSCAN(min_cluster_size=2)  # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
-  df['Cluster'] = cluster_labels
-  df
+  cluster_output = pd.DataFrame({'Cluster': cluster_labels})
+  cluster_output
 
 
