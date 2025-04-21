@@ -25,6 +25,6 @@ with st.expander('Data'):
   st.write(y)
 
 with st.expander('Data Visualization'):
-  st.scatter_chart(data=df, x='Avg_Inflow', y='BOD', color='species')
+  st.scatter_chart(data=df, x='Year', y='BOD', color='species')
 
 
