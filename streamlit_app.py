@@ -32,7 +32,7 @@ categorical_features = ['Year', 'Month', 'Day']
 with st.sidebar:
   st.header('Input Features')
   with st.expander('Numeric Features'):
-    Avg_Outflow: st.select_slider('Average Inflow', options=sorted(df['Avg_Outflow'].unique()))
+    Avg_Outflow = st.select_slider('Average Outflow', options=sorted(df['Avg_Outflow'].unique()))
     Avg_Inflow = st.select_slider('Average Inflow', options=sorted(df['Avg_Inflow'].unique()))
     Energy_Cons = st.select_slider('Energy Consumption', options=sorted(df['Energy_Cons'].unique()))
     Ammonia = st.select_slider('Ammonia', options=sorted(df['Ammonia'].unique()))
