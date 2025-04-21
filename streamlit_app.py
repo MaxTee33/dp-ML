@@ -46,6 +46,6 @@ with st.expander('HDBSCAN'):
   model.fit(df_scaled)
   cluster_labels = model.labels_
   df['Cluster'] = cluster_labels
-  print(df)
+  df
 
 
