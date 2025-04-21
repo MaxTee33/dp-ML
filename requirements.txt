@@ -1,10 +1,5 @@
 streamlit
 pandas
 sklearn.decomposition
-seaborn
-missingno
-scikit-learn
-sklearn.preprocessing
+sklearn.cluster
 hdbscan
-MiniSom
-optics
