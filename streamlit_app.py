@@ -4,6 +4,13 @@ import pandas as pd
 st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
 
+  # Define numerical and categorical features
+  numeric_features = [
+      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
+      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
+  ]
+  categorical_features = ['Year', 'Month', 'Day']
+
 with st.expander('Data'):
   st.write('**Raw data**')
   df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
@@ -17,15 +24,7 @@ with st.expander('Data'):
   y = df.Avg_Outflow
   st.write(y)
 
-  # Define numerical and categorical features
-  numeric_features = [
-      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
-      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
-  ]
-  categorical_features = ['Year', 'Month', 'Day']
+with st.expander('Data Visualization'):
+  st.scatter_chart(data=df, x='Avg_Inflow', y='BOD', color='species')
 
-  st.write('**Numeric Features**')
-  st.write(numeric_features)
 
-  st.write('**Categorical Features**')
-  st.write(categorical_features)
