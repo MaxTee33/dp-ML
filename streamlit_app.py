@@ -76,7 +76,7 @@ cluster_labels = model.labels_
 
 # Create a new DataFrame showing only the Cluster labels
 cluster_output = pd.DataFrame({'Cluster': cluster_labels})
-
+cluster_output
 
 
 
