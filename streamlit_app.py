@@ -46,9 +46,13 @@ with st.sidebar:
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
 
+updated_df = df.copy()
+for feature, value in sliders.items():
+    updated_df[feature] = value
+
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
-  df_scaled = scaler.fit_transform(df[numeric_features])
+  df_scaled = scaler.fit_transform(updated_df[numeric_features])
   model = hdbscan.HDBSCAN(min_cluster_size=2)  # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
