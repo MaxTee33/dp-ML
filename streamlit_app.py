@@ -30,9 +30,9 @@ numeric_features = [
 categorical_features = ['Year', 'Month', 'Day']
 
 if isinstance(numeric_features, list):
-    print("The dataset is a list.")
+    "The dataset is a list."
 else:
-    print("The dataset is not a list.")
+    "The dataset is not a list."
 
 
 with st.sidebar:
@@ -69,9 +69,9 @@ data = {'Avarage Outflow': Avg_Outflow,
        }
 
 if isinstance(data, list):
-    print("The dataset is a list.")
+    "The dataset is a list."
 else:
-    print("The dataset is not a list.")
+    "The dataset is not a list."
 
 input_df = pd.DataFrame(data, index=[0])
 input_num = pd.concat([input_df, X], axis=0)
