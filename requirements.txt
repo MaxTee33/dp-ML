@@ -1,6 +1,2 @@
 streamlit
 pandas
-sklearn.decomposition
-sklearn.cluster
-hdbscan
-DBSCAN
