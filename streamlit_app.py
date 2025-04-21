@@ -28,6 +28,13 @@ categorical_features = ['Year', 'Month', 'Day']
 
 with st.sidebar:
   st.header('Input Features')
+  with st.expander('Numeric Features'):
+    Avg_Outflow = st.slider('Average Outflow')
+    
   with st.expander('Categories Features'):
     Year = st.slider('Year', 2014, 2019)
+    Month = st.slider('Month', 1, 12)
+    Day = st.slider('Day', 1, 31)
+
+
 
