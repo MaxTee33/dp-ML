@@ -4,12 +4,7 @@ import pandas as pd
 st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
 
-  # Define numerical and categorical features
-  numeric_features = [
-      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
-      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
-  ]
-  categorical_features = ['Year', 'Month', 'Day']
+
 
 with st.expander('Data'):
   st.write('**Raw data**')
@@ -24,5 +19,10 @@ with st.expander('Data'):
   y = df.Avg_Outflow
   st.write(y)
 
-
+# Define numerical and categorical features
+numeric_features = [
+    'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
+    'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
+]
+categorical_features = ['Year', 'Month', 'Day']
 
