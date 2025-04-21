@@ -32,7 +32,8 @@ categorical_features = ['Year', 'Month', 'Day']
 with st.sidebar:
   st.header('Input Features')
   with st.expander('Numeric Features'):
-    options = sorted(df['Avg_Outflow'].unique())
+    options = list(df['Avg_Outflow'].unique())
+    options.sort()
     Avg_Outflow = st.select_slider('Average Outflow', options=options)
     
   with st.expander('Categories Features'):
