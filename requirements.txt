@@ -1,5 +1,6 @@
-streamlit
-numpy
-pandas
-scikit-learn
-hdbscan
+streamlit==1.14.0
+pandas==1.4.2
+numpy==1.23.1
+scikit-learn==1.1.1
+hdbscan==0.8.29
+MiniSom==2.2.12
