@@ -65,12 +65,14 @@ data = {'Avarage Outflow': Avg_Outflow,
 
 
 input_df = pd.DataFrame(data, index=[0])
+input_list = input_df.values.tolist()
+
 input_num = pd.concat([input_df, X], axis=0)
-st.write("Input Data", input_df)
+st.write("Input Data", input_list)
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
-  df_scaled = scaler.fit_transform(input_df.list)
+  df_scaled = scaler.fit_transform(input_list)
   model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
