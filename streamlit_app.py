@@ -32,23 +32,27 @@ categorical_features = ['Year', 'Month', 'Day']
 with st.sidebar:
   st.header('Input Features')
   with st.expander('Numeric Features'):
-    # Loop through the list of features and create a slider for each one
-    sliders = {}
-    for feature in numeric_features:
-        options = list(df[feature].unique())
-        options.sort()
-        sliders[feature] = st.select_slider(f'{feature}', options=options)
-    for feature, value in sliders.items():
-        st.write(f'Selected {feature}:', value)
+    Avg_Outflow = st.select_slider('Average Inflow', options=sorted(df['Avg_Outflow'].unique()))
+    Avg_Inflow = st.select_slider('Average Inflow', options=sorted(df['Avg_Inflow'].unique()))
+    Energy_Cons = st.select_slider('Energy Consumption', options=sorted(df['Energy_Cons'].unique()))
+    Ammonia = st.select_slider('Ammonia', options=sorted(df['Ammonia'].unique()))
+    BOD = st.select_slider('BOD', options=sorted(df['BOD'].unique()))
+    COD = st.select_slider('COD', options=sorted(df['COD'].unique()))
+    TN = st.select_slider('TN', options=sorted(df['TN'].unique()))
+    Avg_Temperature = st.select_slider('Average Temperature', options=sorted(df['Avg_Temperature'].unique()))
+    Max_Temperature = st.select_slider('Max Temperature', options=sorted(df['Max_Temperature'].unique()))
+    Min_Temperature = st.select_slider('Min Temperature', options=sorted(df['Min_Temperature'].unique()))
+    Avg_Humidity = st.select_slider('Average Humidity', options=sorted(df['Avg_Humidity'].unique()))
     
   with st.expander('Categories Features'):
     Year = st.slider('Year', 2014, 2019)
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
 
-updated_df = df.copy()
-for feature, value in sliders.items():
-    updated_df[feature] = value
+data = {'Avarage Outflow': 
+
+  
+}
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
