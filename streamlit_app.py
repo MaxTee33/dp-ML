@@ -29,7 +29,7 @@ numeric_features = [
 ]
 categorical_features = ['Year', 'Month', 'Day']
 
-if isinstance(Avg_Outflow, list):
+if isinstance(Avg_Outflow[numeric_features], list):
     print("The dataset is a list.")
 else:
     print("The dataset is not a list.")
