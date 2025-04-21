@@ -26,3 +26,8 @@ numeric_features = [
 ]
 categorical_features = ['Year', 'Month', 'Day']
 
+with st.sidebar:
+  st header('Input Features')
+  with st.expander('Categories Features'):
+    Year = st.slider('Year', 2014, 2019)
+
