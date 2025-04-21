@@ -62,7 +62,7 @@ data = {'Avarage Outflow': Avg_Outflow,
         'Average Humidity' : Avg_Humidity
        }
 input_df = pd.DataFrame(data, index[0])
-input_df
+input_num = pd.concat([input_df, X], axis=0)
 
 
 with st.expander('HDBSCAN'):
