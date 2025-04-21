@@ -59,7 +59,8 @@ data = {'Avarage Outflow': Avg_Outflow,
         'Average Temperature' : Avg_Temperature,
         'Max Temperature' : Max_Temperature,
         'Min Temperature' : Min_Temperature,
-        'Avg_Humidity' : Average Humidity}
+        'Average Humidity' : Avg_Humidity
+       }
 input_df = pd.DataFrame(data, index[0])
 input_df
 
