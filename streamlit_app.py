@@ -1,5 +1,6 @@
 import streamlit as st
 import hdbscan
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
 
@@ -38,5 +39,13 @@ with st.sidebar:
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
 
+with st.expander('HDBSCAN'):
+  scaler = StandardScaler()
+  df_scaled = scaler.fit_transform(df[numeric_features])
+  model = hdbscan.HDBSCAN(min_cluster_size=2)  # You can adjust min_cluster_size
+  model.fit(df_scaled)
+  cluster_labels = model.labels_
+  df['Cluster'] = cluster_labels
+  print(df)
 
 
