@@ -49,10 +49,7 @@ with st.sidebar:
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
 
-data = {'Avarage Outflow': 
 
-  
-}
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
