@@ -11,9 +11,9 @@ with st.expender("Data"):
   df
 
   st.write('**X**')
-  X = df.drop('Average Outflow', axis=1)
+  X = df.drop('Ammonia', axis=1)
   X
 
   st.write('***Y*')
-  Y = df.species
+  Y = df.Ammonia
   Y
