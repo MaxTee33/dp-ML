@@ -48,7 +48,20 @@ with st.sidebar:
     Year = st.slider('Year', 2014, 2019)
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
-
+    
+data = {'Avarage Outflow': Avg_Outflow,
+        'Avg_Inflow' : Avg_Inflow,
+        'Energy Consumption' : Energy_Cons,
+        'Ammonia' : Ammonia,
+        'BOD' : BOD,
+        'COD' : COD,
+        'TN' : TN,
+        'Average Temperature' : Avg_Temperature,
+        'Max Temperature' : Max_Temperature,
+        'Min Temperature' : Min_Temperature,
+        'Avg_Humidity' : Average Humidity}
+input_df = pd.DataFrame(data, index[0])
+input_df
 
 
 with st.expander('HDBSCAN'):
