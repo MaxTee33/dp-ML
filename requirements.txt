@@ -1,7 +1,10 @@
 streamlit
 pandas
-numpy
+sklearn.decomposition
+seaborn
+missingno
 scikit-learn
+sklearn.preprocessing
 hdbscan
 MiniSom
 optics
