@@ -7,13 +7,13 @@ st.info('Clustering Energy Consumption Profiles')
 
 with st.expender("Data"):
   st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/Data-Melbourne_F_fixed.csv')
+  df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
   df
 
   st.write('**X**')
-  X = df.drop('Ammonia', axis=1)
+  X = df.drop('Avg_Outflow', axis=1)
   X
 
-  st.write('***Y*')
-  y = df.Ammonia
+  st.write('**Y**')
+  y = df.Avg_Outflow
   y
