@@ -24,7 +24,5 @@ with st.expander('Data'):
   y = df.Avg_Outflow
   st.write(y)
 
-with st.expander('Data Visualization'):
-  st.scatter_chart(data=df, x='Year', y='BOD', color='species')
 
 
