@@ -29,11 +29,6 @@ numeric_features = [
 ]
 categorical_features = ['Year', 'Month', 'Day']
 
-if isinstance(numeric_features, list):
-    "The dataset is a list."
-else:
-    "The dataset is not a list."
-
 
 with st.sidebar:
   st.header('Input Features')
@@ -68,10 +63,6 @@ data = {'Avarage Outflow': Avg_Outflow,
         'Average Humidity' : Avg_Humidity
        }
 
-if isinstance(data, list):
-    "The dataset is a list."
-else:
-    "The dataset is not a list."
 
 input_df = pd.DataFrame(data, index=[0])
 input_num = pd.concat([input_df, X], axis=0)
@@ -79,7 +70,7 @@ st.write("Input Data", input_df)
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
-  df_scaled = scaler.fit_transform(input_df)
+  df_scaled = scaler.fit_transform(input_df.list)
   model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
