@@ -1,31 +1,67 @@
 import streamlit as st
+import numpy as np
 import pandas as pd
+from sklearn.cluster import AgglomerativeClustering, AffinityPropagation, MeanShift
+from sklearn.metrics import silhouette_score
+import hdbscan
+import optics
+from sklearn.preprocessing import StandardScaler
 
-st.title('🤯 Wastewater Treatment Plants')
-st.info('Clustering Energy Consumption Profiles')
+# Load the data
+df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
+X = df.drop('Avg_Outflow', axis=1)  # Assuming 'Avg_Outflow' is the target
+X_scaled = StandardScaler().fit_transform(X)  # Scaling for clustering algorithms
 
-with st.expander('Data'):
-  st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
-  st.write(df.head())  # Display the first few rows of the data
+# Define clustering algorithms
+clustering_algorithms = {
+    "HDBSCAN": hdbscan.HDBSCAN(),
+    "OPTICS": optics.OPTICS(),
+    "Agglomerative Clustering": AgglomerativeClustering(),
+    "Affinity Propagation": AffinityPropagation(),
+    "Self-Organizing Maps (SOM)": 'SOM placeholder',  # To be implemented separately
+    "Mean Shift": MeanShift()
+}
 
-  st.write('**X**')
-  X = df.drop('Avg_Outflow', axis=1)
-  st.write(X)
+# Function to evaluate clustering
+def evaluate_clustering(X, algorithm, name):
+    model = algorithm
+    model.fit(X)
+    labels = model.labels_
 
-  st.write('**Y**')
-  y = df.Avg_Outflow
-  st.write(y)
+    # Calculate silhouette score (if possible)
+    if len(set(labels)) > 1:
+        silhouette = silhouette_score(X, labels)
+    else:
+        silhouette = "Not enough clusters"
 
-  # Define numerical and categorical features
-  numeric_features = [
-      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
-      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
-  ]
-  categorical_features = ['Year', 'Month', 'Day']
+    return labels, silhouette
 
-  st.write('**Numeric Features**')
-  st.write(numeric_features)
+# Streamlit User Interface to choose algorithm
+st.title('Clustering Energy Consumption Profiles')
+st.write("Choose a clustering algorithm:")
+selected_algorithm = st.selectbox("Select Clustering Algorithm", list(clustering_algorithms.keys()))
 
-  st.write('**Categorical Features**')
-  st.write(categorical_features)
+# Run the selected clustering model
+if selected_algorithm != "Self-Organizing Maps (SOM)":  # SOM requires additional implementation
+    algorithm = clustering_algorithms[selected_algorithm]
+    labels, silhouette = evaluate_clustering(X_scaled, algorithm, selected_algorithm)
+    st.write(f"Clustering results for {selected_algorithm}:")
+    st.write(labels)  # Show cluster labels
+    st.write(f"Silhouette Score: {silhouette}")
+else:
+    st.write("Self-Organizing Maps (SOM) implementation required")
+
+# Display results in a humanized manner
+st.write("Clustering evaluation metrics:")
+st.write("Performance Metrics like Silhouette Score can be used to tune and optimize the model")
+
+
+st.write("Tune Hyperparameters for Clustering Algorithms:")
+
+if selected_algorithm == "Agglomerative Clustering":
+    n_clusters = st.slider("Number of clusters", 2, 20, 5)
+    algorithm = AgglomerativeClustering(n_clusters=n_clusters)
+elif selected_algorithm == "Affinity Propagation":
+    damping = st.slider("Damping (0 to 1)", 0.5, 1.0, 0.9)
+    algorithm = AffinityPropagation(damping=damping)
+# Add similar customization for other algorithms
