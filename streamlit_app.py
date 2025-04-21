@@ -1,47 +1,49 @@
 import streamlit as st
+from sklearn.cluster import AgglomerativeClustering, DBSCAN
 import pandas as pd
-from sklearn.decomposition import PCA
+import numpy as np
+import matplotlib.pyplot as plt
 
-st.title('🤯 Wastewater Treatment Plants')
-st.info('Clustering Energy Consumption Profiles')
+# Load dataset
+@st.cache
+def load_data():
+    return pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
 
-with st.expander('Data'):
-  st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
-  st.write(df.head())  # Display the first few rows of the data
+# Display dataset preview
+st.write('**Data Preview**')
+df = load_data()
+st.write(df.head())
 
-  st.write('**X**')
-  X = df.drop('Avg_Outflow', axis=1)
-  st.write(X)
+# Select clustering technique
+clustering_method = st.selectbox('Select Clustering Method', ['Agglomerative Clustering', 'DBSCAN', 'HDBSCAN', 'OPTICS', 'Mean Shift'])
 
-  st.write('**Y**')
-  y = df.Avg_Outflow
-  st.write(y)
+# Display parameter options based on selected method
+if clustering_method == 'Agglomerative Clustering':
+    n_clusters = st.slider('Number of Clusters', 2, 10, 5)
+    model = AgglomerativeClustering(n_clusters=n_clusters)
+elif clustering_method == 'DBSCAN':
+    eps = st.slider('EPS', 0.1, 2.0, 0.5)
+    min_samples = st.slider('Min Samples', 2, 10, 5)
+    model = DBSCAN(eps=eps, min_samples=min_samples)
 
-  # Define numerical and categorical features
-  numeric_features = [
-      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
-      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
-  ]
-  categorical_features = ['Year', 'Month', 'Day']
+# Train model and show clusters
+st.write('**Clustering Results**')
+X = df.drop('Avg_Outflow', axis=1)  # Adjust based on your features
+y = df['Avg_Outflow']
+model.fit(X)
+labels = model.labels_
 
-  st.write('**Numeric Features**')
-  st.write(numeric_features)
+# Show results
+st.write('Cluster Labels:', labels)
 
-  st.write('**Categorical Features**')
-  st.write(categorical_features)
+# Visualize clusters (e.g., 2D scatter plot)
+st.write('**Cluster Visualization**')
+plt.scatter(X.iloc[:, 0], X.iloc[:, 1], c=labels)
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+st.pyplot()
 
+# Show evaluation metrics
+st.write('**Evaluation Metrics**')
+# You can add custom metrics like silhouette score or others
 
-# Select numerical columns (both float and integer types) from df_no_outliers
-numeric_cols = df_no_outliers.select_dtypes(include=['float64', 'int64']).columns
-
-# Apply StandardScaler to the numerical columns of df_no_outliers
-df_scaled = StandardScaler().fit_transform(df_no_outliers[numeric_cols])
-
-# Convert the scaled values back into a DataFrame for easier handling
-df_scaled = pd.DataFrame(df_scaled, columns=numeric_cols)
-
-pca = PCA(n_components=11)  # Try using 5 components
-df_pca = pca.fit_transform(df_scaled)
-cumulative_variance = pca.explained_variance_ratio_.cumsum()
-print("Cumulative Explained Variance with 11 components:", cumulative_variance)
