@@ -50,29 +50,28 @@ with st.sidebar:
     Month = st.slider('Month', 1, 12)
     Day = st.slider('Day', 1, 31)
     
-data = {'Avarage Outflow': Avg_Outflow,
-        'Average Inflow' : Avg_Inflow,
-        'Energy Consumption' : Energy_Cons,
-        'Ammonia' : Ammonia,
-        'BOD' : BOD,
-        'COD' : COD,
-        'TN' : TN,
-        'Average Temperature' : Avg_Temperature,
-        'Max Temperature' : Max_Temperature,
-        'Min Temperature' : Min_Temperature,
-        'Average Humidity' : Avg_Humidity
+data = {'Avarage Outflow': [Avg_Outflow],
+        'Average Inflow' : [Avg_Inflow],
+        'Energy Consumption' : [Energy_Cons],
+        'Ammonia' : [Ammonia],
+        'BOD' : [BOD],
+        'COD' : [COD],
+        'TN' : [TN],
+        'Average Temperature' : [Avg_Temperature],
+        'Max Temperature' : [Max_Temperature],
+        'Min Temperature' : [Min_Temperature],
+        'Average Humidity' : [Avg_Humidity]
        }
 
 
 input_df = pd.DataFrame(data, index=[0])
-input_list = input_df.values.tolist()
 
 input_num = pd.concat([input_df, X], axis=0)
-st.write("Input Data", input_list)
+st.write("Input Data", input_df)
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
-  df_scaled = scaler.fit_transform(input_list)
+  df_scaled = scaler.fit_transform(input_df)
   model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
