@@ -61,7 +61,7 @@ data = {'Avarage Outflow': Avg_Outflow,
         'Min Temperature' : Min_Temperature,
         'Average Humidity' : Avg_Humidity
        }
-input_df = pd.DataFrame(data, index[0])
+input_df = pd.DataFrame(data, index=[0])
 input_num = pd.concat([input_df, X], axis=0)
 
 
