@@ -50,7 +50,7 @@ with st.sidebar:
     Day = st.slider('Day', 1, 31)
     
 data = {'Avarage Outflow': Avg_Outflow,
-        'Avg_Inflow' : Avg_Inflow,
+        'Average Inflow' : Avg_Inflow,
         'Energy Consumption' : Energy_Cons,
         'Ammonia' : Ammonia,
         'BOD' : BOD,
@@ -68,8 +68,8 @@ st.write("Input Data", input_df)
 
 with st.expander('HDBSCAN'):
   scaler = StandardScaler()
-  df_scaled = scaler.fit_transform(input_df[numeric_features])
-  model = hdbscan.HDBSCAN(min_cluster_size=3) # You can adjust min_cluster_size
+  df_scaled = scaler.fit_transform(input_df)
+  model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
   model.fit(df_scaled)
   cluster_labels = model.labels_
   cluster_output = pd.DataFrame({'Cluster': cluster_labels})
