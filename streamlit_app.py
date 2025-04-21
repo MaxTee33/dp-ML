@@ -1,5 +1,4 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
 
 st.title('🤯 Wastewater Treatment Plants')
@@ -8,12 +7,25 @@ st.info('Clustering Energy Consumption Profiles')
 with st.expander('Data'):
   st.write('**Raw data**')
   df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
-  df
+  st.write(df.head())  # Display the first few rows of the data
 
   st.write('**X**')
   X = df.drop('Avg_Outflow', axis=1)
-  X
+  st.write(X)
 
   st.write('**Y**')
   y = df.Avg_Outflow
-  y
+  st.write(y)
+
+  # Define numerical and categorical features
+  numeric_features = [
+      'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
+      'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
+  ]
+  categorical_features = ['Year', 'Month', 'Day']
+
+  st.write('**Numeric Features**')
+  st.write(numeric_features)
+
+  st.write('**Categorical Features**')
+  st.write(categorical_features)
