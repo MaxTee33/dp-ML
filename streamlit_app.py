@@ -61,10 +61,19 @@ data = {'Avarage Outflow': Avg_Outflow,
         'Min Temperature' : Min_Temperature,
         'Average Humidity' : Avg_Humidity
        }
+
 input_df = pd.DataFrame(data, index=[0])
 input_num = pd.concat([input_df, X], axis=0)
-
 input_df
+
+with st.expander('HDBSCAN'):
+  scaler = StandardScaler()
+  df_scaled = scaler.fit_transform(input_df)
+  model = hdbscan.HDBSCAN(min_cluster_size=2) # You can adjust min_cluster_size
+  model.fit(df_scaled)
+  cluster_labels = model.labels_
+  cluster_output = pd.DataFrame({'Cluster': cluster_labels})
+  cluster_output
 
 
 
