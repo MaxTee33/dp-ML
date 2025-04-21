@@ -32,9 +32,14 @@ categorical_features = ['Year', 'Month', 'Day']
 with st.sidebar:
   st.header('Input Features')
   with st.expander('Numeric Features'):
-    Avg_Out = list(df['Avg_Outflow'].unique())
-    Avg_Out.sort()
-    Avg_Outflow = st.select_slider('Average Outflow', Avg_Out=Avg_Out)
+    # Loop through the list of features and create a slider for each one
+    sliders = {}
+    for feature in numeric_features:
+        options = list(df[feature].unique())
+        options.sort()
+        sliders[feature] = st.select_slider(f'{feature}', options=options)
+    for feature, value in sliders.items():
+        st.write(f'Selected {feature}:', value)
     
   with st.expander('Categories Features'):
     Year = st.slider('Year', 2014, 2019)
