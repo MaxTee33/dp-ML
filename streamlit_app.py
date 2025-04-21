@@ -15,5 +15,5 @@ with st.expender("Data"):
   X
 
   st.write('***Y*')
-  Y = df.Ammonia
-  Y
+  y = df.Ammonia
+  y
