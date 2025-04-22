@@ -2,3 +2,5 @@ streamlit
 pandas
 hdbscan
 StandardScaler
+seaborn
+missingno
