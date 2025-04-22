@@ -1,8 +1,15 @@
 import streamlit as st
-import hdbscan
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import missingno as msno
+import warnings
+warnings.filterwarnings("ignore")
+
+import hdbscan
+
+from sklearn.preprocessing import StandardScaler
+
 
 st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
