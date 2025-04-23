@@ -22,12 +22,9 @@ st.info('Clustering Energy Consumption Profiles')
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
 
 # Define numerical and categorical features
-df.numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-df.categorical_features = ['Year', 'Month', 'Day']
+#numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
+#categorical_features = ['Year', 'Month', 'Day']
 
-
-options = df.numeric_features.columns.tolist()
-st.write("Here is my list:", options)
 
 with st.expander('Data'):
   st.write('**Raw data**')
@@ -100,41 +97,49 @@ with st.sidebar:
 
 with st.expander('Clusters'):
   # List of options for feature selection
+  
+  options = df.columns.tolist()
+  st.write("Here is my list:", options)
+  
   options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
   selection = st.multiselect("Select features", options, default=options)
   valid_selection = [col for col in selection if col in df.columns]
-
+  df_selected = df[valid_selection]
   
-  X = df[valid_selection]
+  X = df[df_selected]
   num_entries = X.shape[0]
 
   num_rows = st.slider("Select a range of number rows", 0, 5000)
   st.write("Values:", num_rows)
   
   scaler = StandardScaler()
-  X_scaled = scaler.fit_transform(X)
+  X_scaled = scaler.fit_transform(df_selected)
   pca = PCA(n_components=3)
   X_pca = pca.fit_transform(X_scaled)
-  
-  if __name__ == "__main__":
-      # 1. Generate sample data
-      np.random.seed(42)
-      X = np.random.randn(num_rows, num_entries)
+
+  if len(valid_selection) == 2:
+    if __name__ == "__main__":
+        # 1. Generate sample data
+        np.random.seed(42)
+        X = np.random.randn(num_rows, num_entries)
+        
+        # 2. Scale the data
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        
+        # 3. Perform PCA to reduce to 2 components (for visualization)
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # 4. Perform Agglomerative Clustering
+        agg_clustering = AgglomerativeClustering(n_clusters=6)  # 3 clusters
+        agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+        
+        # 5. Visualize the clustering results using the function
+        visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
       
-      # 2. Scale the data
-      scaler = StandardScaler()
-      X_scaled = scaler.fit_transform(X)
-      
-      # 3. Perform PCA to reduce to 2 components (for visualization)
-      pca = PCA(n_components=2)
-      X_pca = pca.fit_transform(X_scaled)
-      
-      # 4. Perform Agglomerative Clustering
-      agg_clustering = AgglomerativeClustering(n_clusters=6)  # 3 clusters
-      agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
-      
-      # 5. Visualize the clustering results using the function
-      visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
+    else:
+    st.markdown("Please select exactly two features to display the scatter plot.")
 
 
 
