@@ -127,7 +127,7 @@ with st.expander('Affinity Propagation'):
           st.write('Average of each feature per cluster', cluster_summary)
         
       except Exception as e:
-          st.write("Can't Calculate Describe Summary of Data Because Too Few of Data Points!")
+          st.write("Can't Calculate Describe Summary of Data Because of Too Few Data Points!")
       
     else:
       st.write("Please select more than one feature to display the scatter plot.")
@@ -158,18 +158,20 @@ with st.expander('HDBSCAN'):
         hdb_labels = hdb.fit_predict(X_scaled)
         
         visualize_clusters(X_pca, hdb_labels, 'HDBSCAN')
-        
-        # Silhouette Score
-        silhouette_avg = silhouette_score(X_scaled, hdb_labels)
-        st.write('Silhouette Score:', silhouette_avg)
+
+        try:
+            # Silhouette Score
+            silhouette_avg = silhouette_score(X_scaled, hdb_labels)
+            st.write('Silhouette Score:', silhouette_avg)
+        except Exception as e:
+            st.write("Can't Calculate Silhouette Score Because of Single Cluster Scenario!")    
       
         try:
             df_selected['Cluster Label'] = hdb_labels
             cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
             st.write('Average of each feature per cluster', cluster_summary)
-
         except Exception as e:
-          st.write("Can't Calculate Describe Summary of Data Because Too Few of Data Points!")
+          st.write("Can't Calculate Describe Summary of Data Because of Too Few Data Points!")
     
     else:
         st.write("Please select more than one feature to display the scatter plot.")
