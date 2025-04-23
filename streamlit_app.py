@@ -113,17 +113,16 @@ with st.expander('Affinity Propagation'):
       
       left, middle, right = st.columns(3)
       if left.button("Use default as perference", use_container_width=True):
-        preference_dynamic = None
         left.markdown('Now, your preference is:', preference_dynamic)
+        preference_dynamic = None
         
       if middle.button("Use mediam as perference", use_container_width=True):
-        preference_dynamic = np.median(similarity_matrix)
         middle.markdown('Now, your preference is:', preference_dynamic)
+        preference_dynamic = np.median(similarity_matrix)
         
       if right.button("Use meam as perference", use_container_width=True):
-          preference_dynamic = np.median(similarity_matrix)
           right.markdown('Now, your preference is:', preference_dynamic)
-        
+          preference_dynamic = np.median(similarity_matrix)
 
       
       # Apply Affinity Propagation
