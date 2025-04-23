@@ -135,8 +135,8 @@ with st.expander('Affinity Propagation'):
 
 
 # Expender of HDBSCAN
-with st.expander('HDBSCAN', key='hdbscan'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Added unique key
+with st.expander('HDBSCAN'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='hdbscan')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -180,8 +180,8 @@ with st.expander('HDBSCAN', key='hdbscan'):
 
 
 # Expander of Mean Shift
-with st.expander('Mean Shift', key='mean_shift'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Added unique key
+with st.expander('Mean Shift'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='mean_shift')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
