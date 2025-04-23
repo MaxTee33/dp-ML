@@ -104,7 +104,7 @@ with st.expander('Clusters'):
   if __name__ == "__main__":
       # 1. Generate sample data
       np.random.seed(42)
-      X = np.random.randn(100, 5)  # 100 samples, 5 features
+      X = np.random.randn(1000, 1)  # 100 samples, 5 features
       
       # 2. Scale the data
       scaler = StandardScaler()
