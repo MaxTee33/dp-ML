@@ -9,6 +9,7 @@ warnings.filterwarnings("ignore")
 
 from sklearn.cluster import AgglomerativeClustering, AffinityPropagation, MeanShift, OPTICS
 import hdbscan
+from minisom import MiniSom
 from sklearn.datasets import make_blobs
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import silhouette_score
@@ -56,35 +57,33 @@ def visualize_clusters(X, labels, title):
   st.pyplot(plt)
 
 
-# Expander of Affinity Propagation
-with st.expander('Affinity Propagation'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='agg_clustering')  # Default selects all features
+# Expander of Agglomerative Clustering
+with st.expander('Agglomerative Clustering'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='agg_clustering')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
-        
+        n_clusters = st.slider("Select number of clusters", 1, 10, 3)
+
         # StandardScaler and PCA
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
-        
-        # Apply Affinity Propagation
-        aff_prop = AffinityPropagation(preference=-50)
-        aff_prop.fit(X_scaled)
-        aff_labels = aff_prop.labels_
-        
-        visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
+        agg_clustering = AgglomerativeClustering(n_clusters)
+        agg_labels = agg_clustering.fit_predict(X_scaled)
+
+        visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
         
         # Silhouette Score
-        silhouette_avg = silhouette_score(X_scaled, aff_labels)
+        silhouette_avg = silhouette_score(X_scaled, agg_labels)
         st.write('Silhouette Score:', silhouette_avg)
 
-        df_selected['Cluster Label'] = aff_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        numerical_features['Cluster Label'] = agg_labels
+        cluster_summary = numerical_features.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
     
     else:
@@ -129,10 +128,152 @@ with st.expander('Affinity Propagation'):
 
 
 
+# Expender of HDBSCAN
+with st.expander('HDBSCAN'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='hdbscan')  # Added unique key
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Apply HDBSCAN
+        hdb = hdbscan.HDBSCAN(min_cluster_size=10)
+        hdb_labels = hdb.fit_predict(X_scaled)
+        
+        visualize_clusters(X_pca, hdb_labels, 'HDBSCAN')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, hdb_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = hdb_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
 
 
 
 
+# Expander of Mean Shift
+with st.expander('Mean Shift'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='mean_shift')  # Added unique key
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Apply Mean Shift
+        mean_shift = MeanShift(bandwidth=1.5)
+        mean_shift.fit(X_scaled)
+        mean_shift_labels = mean_shift.labels_
+        
+        visualize_clusters(X_pca, mean_shift_labels, 'Mean Shift')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, mean_shift_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = mean_shift_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
+
+
+
+
+
+# Expander of OPTICS
+with st.expander('OPTICS'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='optics')  # Added unique key
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Apply OPTICS
+        optics = OPTICS(min_samples=10)
+        optics.fit(X_scaled)
+        optics_labels = optics.labels_
+        
+        visualize_clusters(X_pca, optics_labels, 'OPTICS')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, optics_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = optics_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
+
+
+
+
+# Expander of Self-Organizing Maps (SOM)
+with st.expander('Self-Organizing Maps (SOM)'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='som')  # Added unique key
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Define and train the SOM
+        som = MiniSom(5, 5, len(valid_selection), sigma=1.0, learning_rate=0.5)
+        som.train(X_scaled, 100)
+        
+        # Get the cluster labels from SOM
+        som_labels = np.array([som.winner(x)[0] * 5 + som.winner(x)[1] for x in X_scaled])
+        
+        visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM)')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, som_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = som_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
 
 
 
