@@ -64,7 +64,7 @@ with st.expander('Agglomerative Clustering'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
         n_clusters = st.slider("Select number of clusters", 2, 10, 3)
 
@@ -99,7 +99,7 @@ with st.expander('Affinity Propagation'):
     if len(valid_selection) >= 2:
     
       df_selected = df[valid_selection]
-      num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+      num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
       st.write(f"Number of rows selected: {num_rows}")
           
       # StandardScaler and PCA
@@ -141,10 +141,10 @@ with st.expander('HDBSCAN'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
 
-        cluster_size = st.slider("Select the desired cluster_size", 2, 40, 10)  # Use the actual number of rows in df
+        cluster_size = st.slider("Select the desired Cluster Size", 2, 40, 10) 
         st.write(f"Number of Cluster Size: {cluster_size}")
         
         # StandardScaler and PCA
@@ -186,7 +186,10 @@ with st.expander('Mean Shift'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+      
+        bandwidth = st.slider("Select the desired Number of Rows", 1, 40, 10) 
         st.write(f"Number of rows selected: {num_rows}")
         
         # StandardScaler and PCA
@@ -196,7 +199,7 @@ with st.expander('Mean Shift'):
         X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
-        mean_shift = MeanShift(bandwidth=1.5)
+        mean_shift = MeanShift(bandwidth)
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
@@ -231,7 +234,7 @@ with st.expander('OPTICS'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
         
         # StandardScaler and PCA
@@ -268,7 +271,7 @@ with st.expander('Self-Organizing Maps (SOM)'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
         
         # StandardScaler and PCA
