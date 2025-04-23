@@ -98,8 +98,6 @@ with st.sidebar:
 with st.expander('Clusters'):
   # List of options for feature selection
   
-  options = df.columns.tolist()
-  st.write("Here is my list:", options)
   
   options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
   selection = st.multiselect("Select features", options, default=options)
@@ -107,7 +105,7 @@ with st.expander('Clusters'):
   df_selected = df[valid_selection]
   
 
-  num_rows = st.slider("Select a range of number rows", 0, 5000)
+  num_rows = st.slider("Select a range of number rows", 0, 1000)
   st.write("Values:", num_rows)
   
   scaler = StandardScaler()
@@ -115,7 +113,7 @@ with st.expander('Clusters'):
   pca = PCA(n_components=3)
   X_pca = pca.fit_transform(X_scaled)
 
-  if len(valid_selection) == 2:
+  if len(valid_selection) => 2:
     if __name__ == "__main__":
         # 1. Generate sample data
         np.random.seed(42)
