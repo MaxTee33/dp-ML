@@ -40,43 +40,6 @@ with st.expander('Data'):
   y = df.Avg_Outflow
   st.write(y)
 
-
-
-
-with st.sidebar:
-  st.header('Input Features')
-  with st.expander('Numeric Features'):
-    Avg_Outflow = st.select_slider('Average Outflow', options=sorted(df['Avg_Outflow'].unique()))
-    Avg_Inflow = st.select_slider('Average Inflow', options=sorted(df['Avg_Inflow'].unique()))
-    Energy_Cons = st.select_slider('Energy Consumption', options=sorted(df['Energy_Cons'].unique()))
-    Ammonia = st.select_slider('Ammonia', options=sorted(df['Ammonia'].unique()))
-    BOD = st.select_slider('BOD', options=sorted(df['BOD'].unique()))
-    COD = st.select_slider('COD', options=sorted(df['COD'].unique()))
-    TN = st.select_slider('TN', options=sorted(df['TN'].unique()))
-    Avg_Temperature = st.select_slider('Average Temperature', options=sorted(df['Avg_Temperature'].unique()))
-    Max_Temperature = st.select_slider('Max Temperature', options=sorted(df['Max_Temperature'].unique()))
-    Min_Temperature = st.select_slider('Min Temperature', options=sorted(df['Min_Temperature'].unique()))
-    Avg_Humidity = st.select_slider('Average Humidity', options=sorted(df['Avg_Humidity'].unique()))
-    
-  with st.expander('Categories Features'):
-    Year = st.slider('Year', 2014, 2019)
-    Month = st.slider('Month', 1, 12)
-    Day = st.slider('Day', 1, 31)
-    
-  data = {'Avarage Outflow': [Avg_Outflow],
-          'Average Inflow' : [Avg_Inflow],
-          'Energy Consumption' : [Energy_Cons],
-          'Ammonia' : [Ammonia],
-          'BOD' : [BOD],
-          'COD' : [COD],
-          'TN' : [TN],
-          'Average Temperature' : [Avg_Temperature],
-          'Max Temperature' : [Max_Temperature],
-          'Min Temperature' : [Min_Temperature],
-          'Average Humidity' : [Avg_Humidity]
-         }
-
-
   
  # Function to visualize clustering results with color map
 def visualize_clusters(X, labels, title):
@@ -93,7 +56,9 @@ def visualize_clusters(X, labels, title):
   st.pyplot(plt)
 
 
-  
+
+
+
 # Expander of Agglomerative Clustering
 with st.expander('Agglomerative Clustering'):
   selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
@@ -127,6 +92,41 @@ with st.expander('Agglomerative Clustering'):
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
+
+# Expander of Affinity Propagation
+with st.expander('Affinity Propagation'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Apply Affinity Propagation
+        aff_prop = AffinityPropagation(preference=-50)
+        aff_prop.fit(X_scaled)
+        aff_labels = aff_prop.labels_
+        
+        visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, aff_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = aff_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
+
 
 
 
