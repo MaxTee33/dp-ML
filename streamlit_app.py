@@ -135,8 +135,8 @@ with st.expander('Affinity Propagation'):
 
 
 # Expender of HDBSCAN
-with st.expander('HDBSCAN'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='hdbscan')  # Added unique key
+with st.expander('HDBSCAN', key='hdbscan'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -180,8 +180,8 @@ with st.expander('HDBSCAN'):
 
 
 # Expander of Mean Shift
-with st.expander('Mean Shift'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='mean_shift')  # Added unique key
+with st.expander('Mean Shift', key='mean_shift'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -201,10 +201,13 @@ with st.expander('Mean Shift'):
         mean_shift_labels = mean_shift.labels_
         
         visualize_clusters(X_pca, mean_shift_labels, 'Mean Shift')
-        
-        # Silhouette Score
-        silhouette_avg = silhouette_score(X_scaled, mean_shift_labels)
-        st.write('Silhouette Score:', silhouette_avg)
+
+        try:
+            # Silhouette Score
+            silhouette_avg = silhouette_score(X_scaled, mean_shift_labels)
+            st.write('Silhouette Score:', silhouette_avg)
+        except Exception as e:
+            st.write("Can't Calculate Silhouette Score Because of Single Cluster Scenario!") 
       
         try:
             df_selected['Cluster Label'] = mean_shift_labels
