@@ -79,11 +79,9 @@ with st.sidebar:
  # Function to visualize clustering results with color map
 def visualize_clusters(X, labels, title):
   
-  # Create a DataFrame for easier handling
   df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
   df['Cluster'] = labels  # Add the cluster labels as a new column
-    
-  # Set up the plot with a color map
+  
   plt.figure(figsize=(12, 10))
   scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
   plt.title(title)
@@ -91,9 +89,7 @@ def visualize_clusters(X, labels, title):
   plt.ylabel('PCA Component 2')
   plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
   st.pyplot(plt)  # Display the plot in Streamlit
-
-# Upload or load your CSV file (this can be done by Streamlit's file uploader or pre-loaded dataframe)
-df = pd.read_csv('path_to_your_file.csv')  # Replace with your actual file path
+  
 
 # Using Streamlit expander for clusters
 with st.expander('Clusters'):
