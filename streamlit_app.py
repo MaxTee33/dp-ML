@@ -91,14 +91,13 @@ def visualize_clusters(X, labels, title):
 
 
   
-# Using Streamlit expander for clusters
-with st.expander('Clusters'):
+# Expander of Agglomerative Clustering
+with st.expander('Agglomerative Clustering'):
   selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
   valid_selection = [col for col in selection if col in df.columns]
+  
   if len(valid_selection) >= 2:
-    
     df_selected = df[valid_selection]
-    
     num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
     st.write(f"Number of rows selected: {num_rows}")
     n_clusters = st.slider("Select number of clusters", 1, 10, 3)
@@ -108,14 +107,12 @@ with st.expander('Clusters'):
     X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(X_scaled)
-     # Ensure at least two features are selected for clustering and visualization
-  
     agg_clustering = AgglomerativeClustering(n_clusters)
-    agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+    agg_labels = agg_clustering.fit_predict(X_scaled)
+    st.write(agg_labels)
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
     
   else:
-    # Perform clustering and visualization if exactly two features are selected
     st.write("Please select more than one features to display the scatter plot.")
 
 
