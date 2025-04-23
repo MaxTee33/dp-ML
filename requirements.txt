@@ -5,7 +5,6 @@ StandardScaler
 seaborn
 missingno
 PCA
-plt
 scikit-learn>=0.24.0
 
 
