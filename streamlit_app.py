@@ -91,15 +91,23 @@ with st.sidebar:
       st.pyplot(plt)  # Display the plot in Streamlit
 
 
-  X = df[numeric_features]
-  scaler = StandardScaler()
-  X_scaled = scaler.fit_transform(X)
-  pca = PCA(n_components=3)
-  X_pca = pca.fit_transform(X_scaled)
+# List of options for feature selection
+options = ['Average Outflow', 'Average Inflow', 'Energy Consumption', 'Ammonia', 'BOD', 'COD', 'TN', 
+           'Average Temperature', 'Max Temperature', 'Min Temperature', 'Avg Humidity']
 
-options = ["Avarage Outflow", "Average Inflow", 'Energy Consumption', 'Ammonia', 'BOD', 'COD','TN', 'Average Temperature', 'Max Temperature', 'Min Temperature', 'Avg Humidity']
-selection = st.pills("features", options, selection_mode="multi")
-st.markdown(f"Your selected options: {selection}.")
+# Streamlit multiselect widget for feature selection
+selection = st.multiselect("Select features", options, default=options)  # Default selects all features
+
+# Display the selected features
+st.markdown(f"Your selected options: {selection}")
+
+# Filter the DataFrame based on the selected features
+X = df[selection]
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+pca = PCA(n_components=3)
+X_pca = pca.fit_transform(X_scaled)
+
 
 
 with st.expander('Clusters'):
