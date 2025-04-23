@@ -144,7 +144,7 @@ with st.expander('HDBSCAN'):
         num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
 
-        cluster_size = st.slider("Select the desired cluster_size", 1, 1, 100)  # Use the actual number of rows in df
+        cluster_size = st.slider("Select the desired cluster_size",10, 2, 40)  # Use the actual number of rows in df
         st.write(f"Number of Cluster Size: {cluster_size}")
         
         # StandardScaler and PCA
