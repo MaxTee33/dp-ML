@@ -11,4 +11,3 @@ AgglomerativeClustering
 AffinityPropagation
 MeanShift
 OPTICS
-matplotlib.pyplot
