@@ -102,7 +102,7 @@ selection = st.multiselect("Select features", options, default=options)  # Defau
 st.markdown(f"Your selected options: {selection}")
 
 # Filter the DataFrame based on the selected features
-X = df[selection]
+X = df[{selection}]
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 pca = PCA(n_components=3)
