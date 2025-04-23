@@ -16,8 +16,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
 
-
+st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
+
 
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
 
@@ -109,7 +110,7 @@ with st.expander('Agglomerative Clustering'):
     X_pca = pca.fit_transform(X_scaled)
     agg_clustering = AgglomerativeClustering(n_clusters)
     agg_labels = agg_clustering.fit_predict(X_scaled)
-    st.write(agg_clustering)
+    st.write(X_pca, agg_labels)
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
     
   else:
