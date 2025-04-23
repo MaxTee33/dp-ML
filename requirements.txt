@@ -6,5 +6,4 @@ seaborn
 missingno
 PCA
 scikit-learn>=0.24.0
-silhouette_score
 
