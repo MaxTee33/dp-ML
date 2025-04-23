@@ -121,7 +121,7 @@ with st.expander('Clusters'):
     if __name__ == "__main__":
         # 1. Generate sample data
         np.random.seed(42)
-        X = np.random.randn(num_rows, num_entries)
+        X = np.random.randn(num_rows, 3)
         
         # 2. Scale the data
         scaler = StandardScaler()
