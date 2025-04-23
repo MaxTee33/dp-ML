@@ -112,23 +112,20 @@ with st.expander('Affinity Propagation'):
 
       preference_dynamic = None
       preference_set = False
-      # Create columns in the layout
-      left, right = st.columns(2)
-      # Define the button actions
-      
-      if left.button("Use median as preference", use_container_width=True):
+
+      st.button("Default", type="primary")
+      if st.button("Use median as preference", use_container_width=True):
           preference_dynamic = np.median(similarity_matrix)
           preference_set = True
-          left.markdown(f'Now, your preference is: {preference_dynamic}')
-      
-      if right.button("Use mean as preference", use_container_width=True):
+          st.write('Now, your preference is: {preference_dynamic}')
+        
+      if st.button('Use mean as preference' ,use_container_width=True)
           preference_dynamic = np.mean(similarity_matrix)
           preference_set = True
-          right.markdown(f'Now, your preference is: {preference_dynamic}')
-      
+          st.write('Now, your preference is: {preference_dynamic}')
       else:
-          st.write('Now, your preference is using: default')
-
+          st.write("Goodbye")
+      
       
       # Apply Affinity Propagation
       aff_prop = AffinityPropagation(preference=preference_dynamic)
