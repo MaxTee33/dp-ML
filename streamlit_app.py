@@ -58,7 +58,7 @@ def visualize_clusters(X, labels, title):
 
 # Expander of Affinity Propagation
 with st.expander('Affinity Propagation'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[] key='agg_clustering')  # Default selects all features
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='agg_clustering')  # Default selects all features
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
