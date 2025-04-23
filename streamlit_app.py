@@ -56,77 +56,77 @@ def visualize_clusters(X, labels, title):
   st.pyplot(plt)
 
 
+# Expander of Affinity Propagation
+with st.expander('Affinity Propagation'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[] key='agg_clustering')  # Default selects all features
+    valid_selection = [col for col in selection if col in df.columns]
+    
+    if len(valid_selection) >= 2:
+        df_selected = df[valid_selection]
+        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        st.write(f"Number of rows selected: {num_rows}")
+        
+        # StandardScaler and PCA
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # Apply Affinity Propagation
+        aff_prop = AffinityPropagation(preference=-50)
+        aff_prop.fit(X_scaled)
+        aff_labels = aff_prop.labels_
+        
+        visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, aff_labels)
+        st.write('Silhouette Score:', silhouette_avg)
+
+        df_selected['Cluster Label'] = aff_labels
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        st.write('Average of each feature per cluster', cluster_summary)
+    
+    else:
+        st.write("Please select more than one feature to display the scatter plot.")
 
 
 
-# Expander of Agglomerative Clustering
-with st.expander('Agglomerative Clustering'):
-  AC_numerical_features = numerical_features
-  selection = st.multiselect("Select features", AC_numerical_features.columns.tolist(), default=[])  # Default selects all features
-  AC_selection = [col for col in selection if col in df.columns]
+# Expander of Affinity Propagation
+with st.expander('Affinity Propagation'):
+    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='affinity_propagation')  # Added unique key
+    valid_selection = [col for col in selection if col in df.columns]
   
-  if len(AC_selection) >= 2:
-    df_selected = df[AC_selection]
+  if len(valid_selection) >= 2:
+    
+    df_selected = df[valid_selection]
     num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
     st.write(f"Number of rows selected: {num_rows}")
-    n_clusters = st.slider("Select number of clusters", 1, 10, 3)
-
+        
     # StandardScaler and PCA
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
     pca = PCA(n_components=2)
     X_pca = pca.fit_transform(X_scaled)
-    agg_clustering = AgglomerativeClustering(n_clusters)
-    agg_labels = agg_clustering.fit_predict(X_scaled)
-    visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
-    
-    #The silhouette ranges from -1 to +1. Score close to +1 indicates that the clusters well-separated, Close to -1 indicates clusters  poorly separated
-    silhouette_avg = silhouette_score(X_scaled, agg_labels)
+        
+    # Apply Affinity Propagation
+    aff_prop = AffinityPropagation(preference=-50)
+    aff_prop.fit(X_scaled)
+    aff_labels = aff_prop.labels_
+        
+    visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
+        
+    # Silhouette Score
+    silhouette_avg = silhouette_score(X_scaled, aff_labels)
     st.write('Silhouette Score:', silhouette_avg)
 
-    
-    AC_numerical_features['Cluster Label'] = agg_labels
-    cluster_summary = AC_numerical_features.groupby('Cluster Label').describe() #Calculate descriptive statistics for each cluster
+    df_selected['Cluster Label'] = aff_labels
+    cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
     st.write('Average of each feature per cluster', cluster_summary)
     
-  else:
-    st.write("Please select more than one features to display the scatter plot.")
-
-
-# Expander of Affinity Propagation
-with st.expander('Affinity Propagation'):
-  AP_numerical_features = numerical_features
-  selection = st.multiselect("Select features", AP_numerical_features.columns.tolist(), default=[])  # Default selects all features
-  AP_selection = [col for col in selection if col in df.columns]
-    
-  if len(AP_selection) >= 2:
-      df_selected = df[AP_selection]
-      num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
-      st.write(f"Number of rows selected: {num_rows}")
-        
-      # StandardScaler and PCA
-      scaler = StandardScaler()
-      X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
-      pca = PCA(n_components=2)
-      X_pca = pca.fit_transform(X_scaled)
-        
-      # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=-50)
-      aff_prop.fit(X_scaled)
-      aff_labels = aff_prop.labels_
-        
-      visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
-        
-      # Silhouette Score
-      silhouette_avg = silhouette_score(X_scaled, aff_labels)
-      st.write('Silhouette Score:', silhouette_avg)
-
-      AP_numerical_features['Cluster Label'] = aff_labels
-      cluster_summary = AP_numerical_features.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
-      st.write('Average of each feature per cluster', cluster_summary)
-  
-  else:
+else:
     st.write("Please select more than one feature to display the scatter plot.")
+
 
 
 
