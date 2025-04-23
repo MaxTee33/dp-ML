@@ -21,7 +21,9 @@ st.info('Clustering Energy Consumption Profiles')
 
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
 
-
+columns_to_select = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD', 'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
+selected_columns_df = df[columns_to_select]
+st.write(selected_columns_df)
 
 with st.expander('Data'):
   st.write('**Raw data**')
