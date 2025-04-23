@@ -65,7 +65,7 @@ with st.expander('Agglomerative Clustering'):
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected number of rows: {num_rows}")
         n_clusters = st.slider("Select number of clusters", 2, 10, 3)
 
         # StandardScaler and PCA
@@ -100,7 +100,7 @@ with st.expander('Affinity Propagation'):
     
       df_selected = df[valid_selection]
       num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-      st.write(f"Number of rows selected: {num_rows}")
+      st.write(f"Selected number of rows: {num_rows}")
           
       # StandardScaler and PCA
       scaler = StandardScaler()
@@ -143,7 +143,7 @@ with st.expander('HDBSCAN'):
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected number of rows: {num_rows}")
 
         cluster_size = st.slider("Select the desired Cluster Size", 2, 40, 10) 
         st.write(f"Number of Cluster Size: {cluster_size}")
@@ -188,16 +188,14 @@ with st.expander('Mean Shift'):
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected number of rows: {num_rows}")
       
-        num_bandwidth = st.slider("Select the desired Bandwidth", 1, 40, 10) 
+        num_bandwidth = st.slider("Select the desired Bandwidth", 1, 100, 10) 
         st.write(f"Selected bandwidth selected: {num_rows}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
         mean_shift = MeanShift(bandwidth=num_bandwidth)
@@ -236,7 +234,7 @@ with st.expander('OPTICS'):
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected number of rows: {num_rows}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
@@ -273,7 +271,7 @@ with st.expander('Self-Organizing Maps (SOM)'):
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected number of rows: {num_rows}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
