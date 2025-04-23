@@ -107,9 +107,12 @@ with st.expander('Affinity Propagation'):
       X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
       pca = PCA(n_components=2)
       X_pca = pca.fit_transform(X_scaled)
-          
+
+      similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
+      preference_dynamic = np.median(similarity_matrix)
+      
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=-50)
+      aff_prop = AffinityPropagation(preference_dynamic)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
