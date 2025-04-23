@@ -82,7 +82,7 @@ with st.sidebar:
       df['Cluster'] = labels  # Add the cluster labels as a new column
       
       # Set up the plot with a color map
-      plt.figure(figsize=(12, 10))
+      plt.figure(figsize=(16, 14))
       scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
       plt.title(title)
       plt.xlabel('PCA Component 1')
