@@ -109,9 +109,27 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
+
+      preference_dynamic = None
+      preference_set = False
+      # Create columns in the layout
+      left, right = st.columns(2)
+
+      if left.button("Use median as preference", use_container_width=True):
+          preference_dynamic = np.median(similarity_matrix)
+          preference_set = True
+          st.write('Now, your preference is', preference_dynamic)
+      
+      if right.button("Use mean as preference", use_container_width=True):
+          preference_dynamic = np.mean(similarity_matrix)
+          preference_set = True
+          right.markdown(f'Now, your preference is', preference_dynamic)
+          
+      else:
+          st.write('Now, your preference is using: default')
       
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=None)
+      aff_prop = AffinityPropagation(preference_dynamic)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
@@ -159,10 +177,14 @@ with st.expander('HDBSCAN'):
         # Silhouette Score
         silhouette_avg = silhouette_score(X_scaled, hdb_labels)
         st.write('Silhouette Score:', silhouette_avg)
+      
+        try:
+            df_selected['Cluster Label'] = hdb_labels
+            cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+            st.write('Average of each feature per cluster', cluster_summary)
 
-        df_selected['Cluster Label'] = hdb_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
-        st.write('Average of each feature per cluster', cluster_summary)
+        except Exception as e:
+          st.write("Can't Calculate Describe Summary of Data Because Too Few of Data Points!")
     
     else:
         st.write("Please select more than one feature to display the scatter plot.")
