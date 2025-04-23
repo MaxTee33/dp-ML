@@ -98,26 +98,26 @@ with st.expander('Clusters'):
     plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
     st.pyplot()  # Display the plot in Streamlit
 
-    # Example usage with random data
-    if __name__ == "__main__":
-        # 1. Generate sample data
-        np.random.seed(42)
-        X = np.random.randn(100, 5)  # 100 samples, 5 features
-        
-        # 2. Scale the data
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-        
-        # 3. Perform PCA to reduce to 2 components (for visualization)
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X_scaled)
-        
-        # 4. Perform Agglomerative Clustering
-        agg_clustering = AgglomerativeClustering(n_clusters=3)  # 3 clusters
-        agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
-    
-    # 5. Visualize the clustering results using the function
-    visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
+  # Example usage with random data
+  if __name__ == "__main__":
+      # 1. Generate sample data
+      np.random.seed(42)
+      X = np.random.randn(100, 5)  # 100 samples, 5 features
+      
+       # 2. Scale the data
+       scaler = StandardScaler()
+       X_scaled = scaler.fit_transform(X)
+       
+       # 3. Perform PCA to reduce to 2 components (for visualization)
+       pca = PCA(n_components=2)
+       X_pca = pca.fit_transform(X_scaled)
+       
+       # 4. Perform Agglomerative Clustering
+       agg_clustering = AgglomerativeClustering(n_clusters=3)  # 3 clusters
+       agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+   
+       # 5. Visualize the clustering results using the function
+       visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
 
 
 
