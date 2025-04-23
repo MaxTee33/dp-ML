@@ -5,9 +5,10 @@ StandardScaler
 seaborn
 missingno
 PCA
-scikit-learn
+
 make_blobs
 AgglomerativeClustering
 AffinityPropagation
 MeanShift
 OPTICS
+scikit-learn
