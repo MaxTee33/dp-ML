@@ -109,6 +109,7 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
+      st.write(similarity_matrix)
      
       # Apply Affinity Propagation
       aff_prop = AffinityPropagation(preference=None)
