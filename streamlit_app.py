@@ -104,7 +104,7 @@ with st.expander('Clusters'):
   # Main function for clustering
   if __name__ == "__main__":
       # 1. Generate sample data
-      np.random.seed(22)
+      np.random.seed(12)
       X = np.random.randn(1000, 2)  # 100 samples, 5 features
       
       # 2. Scale the data
