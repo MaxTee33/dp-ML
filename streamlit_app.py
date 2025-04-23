@@ -25,7 +25,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/ma
 df.numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 df.categorical_features = ['Year', 'Month', 'Day']
 
-options = df.numeric_features.tolist()
+options = df.df.numeric_features.tolist()
 options
 
 with st.expander('Data'):
