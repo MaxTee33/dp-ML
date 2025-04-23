@@ -11,6 +11,7 @@ from sklearn.cluster import AgglomerativeClustering, AffinityPropagation, MeanSh
 import hdbscan
 from sklearn.datasets import make_blobs
 from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import silhouette_score
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -113,58 +114,15 @@ with st.expander('Agglomerative Clustering'):
     agg_labels = agg_clustering.fit_predict(X_scaled)
     st.write(X_pca, agg_labels)
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
+
+    silhouette_avg = silhouette_score(X_scaled, agg_labels)
+    st.write('Silhouette Score:' silhouette_avg)
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
 
 
 
-def visualize_dendrogram(X_scaled):
-    # Compute the linkage matrix
-    Z = sch.linkage(X_scaled, method='ward')
-    
-    # Plot the dendrogram
-    plt.figure(figsize=(10, 7))
-    sch.dendrogram(Z)
-    plt.title("Agglomerative Clustering Dendrogram")
-    plt.xlabel("Data Points")
-    plt.ylabel("Distance")
-    st.pyplot(plt)  # Display the plot in Streamlit
-
-with st.expander('Agglomerative Clustering'):
-    # Select features for clustering
-    selection = st.multiselect("Select features", numerical_features, default=numerical_features)  # Default selects all features
-    valid_selection = [col for col in selection if col in df.columns]
-    
-    if len(valid_selection) >= 2:
-        # Filter the selected columns
-        df_selected = df[valid_selection]
-        
-        # Allow the user to select a range of rows
-        num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
-        st.write(f"Number of rows selected: {num_rows}")
-        
-        # Select number of clusters
-        n_clusters = st.slider("Select number of clusters", 1, 10, 3)
-
-        # StandardScaler and PCA
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X_scaled)
-        
-        # Apply Agglomerative Clustering
-        agg_clustering = AgglomerativeClustering(n_clusters=n_clusters)
-        agg_labels = agg_clustering.fit_predict(X_scaled)
-
-        # Displaying the PCA results and cluster labels
-        st.write("PCA Transformed Data and Agglomerative Clustering Labels:", X_pca, agg_labels)
-
-        # Visualize Clusters using PCA Scatter Plot
-        visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
-
-        # Visualize Dendrogram
-        visualize_dendrogram(X_scaled)
 
 
 
