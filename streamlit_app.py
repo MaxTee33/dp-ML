@@ -94,7 +94,7 @@ with st.sidebar:
 # List of options for feature selection
 options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 
-st.markdown(f"Your selected options: {selection}")
+selection = st.multiselect("Select features", options, default=options)
 valid_selection = [col for col in selection if col in df.columns]
 X = df[valid_selection]
 scaler = StandardScaler()
