@@ -12,7 +12,7 @@ import hdbscan
 from minisom import MiniSom
 from sklearn.datasets import make_blobs
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, pairwise_distances
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
