@@ -139,7 +139,7 @@ with st.expander('Clusters'):
         visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
       
     else:
-    st.markdown("Please select exactly two features to display the scatter plot.")
+      st.markdown("Please select exactly two features to display the scatter plot.")
 
 
 
