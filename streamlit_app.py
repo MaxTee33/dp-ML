@@ -122,7 +122,7 @@ with st.expander('Agglomerative Clustering'):
     
     numerical_features['Cluster Label'] = agg_labels
     # Display the clustered data (data points grouped by cluster label)
-    grouped_df = df.groupby('Cluster Label').mean()  # Average of each feature per cluster
+    grouped_df = numerical_features.groupby('Cluster Label').mean()  # Average of each feature per cluster
     st.write('Average of each feature per cluster', grouped_df)
     
   else:
