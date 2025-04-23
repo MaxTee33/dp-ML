@@ -106,8 +106,6 @@ with st.expander('Clusters'):
   valid_selection = [col for col in selection if col in df.columns]
   df_selected = df[valid_selection]
   
-  X = df[df_selected]
-  num_entries = X.shape[0]
 
   num_rows = st.slider("Select a range of number rows", 0, 5000)
   st.write("Values:", num_rows)
