@@ -110,6 +110,7 @@ with st.expander('Affinity Propagation'):
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
       preference_dynamic = np.median(similarity_matrix)
+      st.write('Now, your preference is:', preference_dynamic)
       
       # Apply Affinity Propagation
       aff_prop = AffinityPropagation(preference_dynamic)
