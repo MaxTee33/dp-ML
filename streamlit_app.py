@@ -84,6 +84,7 @@ with st.expander('Clusters'):
   pca = PCA(n_components=2)
   X_pca = pca.fit_transform(X_scaled)
   
+  # Function to visualize clustering results using Streamlit
   def visualize_clusters(X, labels, title):
       # Create a DataFrame for easier handling in Streamlit
       df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
@@ -92,7 +93,7 @@ with st.expander('Clusters'):
       # Display scatter chart using Streamlit
       st.title(title)
       st.scatter_chart(df.set_index('Cluster'))  # Cluster as the index, values for visualization
-
+  
   # Example usage with random data
   if __name__ == "__main__":
       # 1. Generate sample data
