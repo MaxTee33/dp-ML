@@ -109,26 +109,9 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
-
-      preference_dynamic = None
-      preference_set = False
-
-      st.button("Default", type="primary")
-      if st.button("Use median as preference", use_container_width=True):
-          preference_dynamic = np.median(similarity_matrix)
-          preference_set = True
-          st.write('Now, your preference is:', preference_dynamic)
-        
-      if st.button('Use mean as preference' ,use_container_width=True):
-          preference_dynamic = np.mean(similarity_matrix)
-          preference_set = True
-          st.write('Now, your preference is:', preference_dynamic)
-      else:
-          st.write('Now, your preference is:', preference_dynamic)
-      
       
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=preference_dynamic)
+      aff_prop = AffinityPropagation(preference=None)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
