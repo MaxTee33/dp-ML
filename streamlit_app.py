@@ -199,7 +199,7 @@ with st.expander('Mean Shift'):
         X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
-        mean_shift = MeanShift(bandwidth)
+        mean_shift = MeanShift(bandwidth=bandwidth)
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
