@@ -117,17 +117,17 @@ with st.expander('Affinity Propagation'):
           
       visualize_clusters(X_pca, aff_labels, 'Affinity Propagation')
       
+      # Silhouette Score
+      silhouette_avg = silhouette_score(X_scaled, aff_labels)
+      st.write('Silhouette Score:', silhouette_avg)
+      
       try:        
-          # Silhouette Score
-          silhouette_avg = silhouette_score(X_scaled, aff_labels)
-          st.write('Silhouette Score:', silhouette_avg)
-        
           df_selected['Cluster Label'] = aff_labels
           cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
           st.write('Average of each feature per cluster', cluster_summary)
         
       except Exception as e:
-          st.write("Too Few Data Points")
+          st.write("Can't Calculate Describe Summary of Data Because Too Few of Data Points!")
       
     else:
       st.write("Please select more than one feature to display the scatter plot.")
