@@ -116,7 +116,7 @@ with st.expander('Agglomerative Clustering'):
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
 
     silhouette_avg = silhouette_score(X_scaled, agg_labels)
-    st.write('Silhouette Score:' silhouette_avg)
+    st.write('Silhouette Score:', silhouette_avg)
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
