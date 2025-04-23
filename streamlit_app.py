@@ -109,27 +109,9 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
-
-      preference_dynamic = None
-      preference_set = False
-      # Create columns in the layout
-      left, right = st.columns(2)
-
-      if left.button("Use median as preference", use_container_width=True):
-          preference_dynamic = np.median(similarity_matrix)
-          preference_set = True
-          st.write('Now, your preference is', preference_dynamic)
-      
-      if right.button("Use mean as preference", use_container_width=True):
-          preference_dynamic = np.mean(similarity_matrix)
-          preference_set = True
-          right.markdown('Now, your preference is', preference_dynamic)
-          
-      else:
-          st.write('Now, your preference is using: default')
-      
+     
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=preference_dynamic)
+      aff_prop = AffinityPropagation(preference=None)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
@@ -161,6 +143,9 @@ with st.expander('HDBSCAN'):
         df_selected = df[valid_selection]
         num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
+
+        cluster_size = st.slider("Select the desired cluster_size", 1, 1, 100)  # Use the actual number of rows in df
+        st.write(f"Number of Cluster Size: {cluster_size}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
@@ -169,7 +154,7 @@ with st.expander('HDBSCAN'):
         X_pca = pca.fit_transform(X_scaled)
         
         # Apply HDBSCAN
-        hdb = hdbscan.HDBSCAN(min_cluster_size=10)
+        hdb = hdbscan.HDBSCAN(cluster_size)
         hdb_labels = hdb.fit_predict(X_scaled)
         
         visualize_clusters(X_pca, hdb_labels, 'HDBSCAN')
