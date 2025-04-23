@@ -90,6 +90,29 @@ def visualize_clusters(X, labels, title):
   plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
   st.pyplot(plt)  # Display the plot in Streamlit
   
+# Using Streamlit expander for clusters
+with st.expander('Clusters'):
+  options = df.columns.tolist()  # Automatically get columns from the DataFrame
+  selection = st.multiselect("Select features", options, default=options)  # Default selects all features
+  st.markdown(f"Your selected options: {selection}")
+  valid_selection = [col for col in selection if col in df.columns]
+  df_selected = df[valid_selection]
+  # Slider to select the number of rows (for dynamic clustering)
+  num_rows = st.slider("Select a range of number of rows", 0, len(df), len(df))  # Use the actual number of rows in df
+  st.write(f"Number of rows selected: {num_rows}")
+
+  # StandardScaler and PCA
+  scaler = StandardScaler()
+  X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+  pca = PCA(n_components=2)
+  X_pca = pca.fit_transform(X_scaled)
+   # Ensure at least two features are selected for clustering and visualization
+
+  agg_clustering = AgglomerativeClustering(n_clusters=6)  # 6 clusters, or you can dynamically choose this as well
+  agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+  # Visualize the clustering results using the function
+  visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
+
 
 
 
