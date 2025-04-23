@@ -23,9 +23,9 @@ st.info('Clustering Energy Consumption Profiles')
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
 
 # Define numerical and categorical features
-#numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
+num_feature = df.numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 #categorical_features = ['Year', 'Month', 'Day']
-
+st.write(num_feature)
 
 with st.expander('Data'):
   st.write('**Raw data**')
@@ -95,7 +95,7 @@ def visualize_clusters(X, labels, title):
 with st.expander('Clusters'):
   options = df.columns.tolist()  # Automatically get columns from the DataFrame
   selection = st.multiselect("Select features", options, default=options)  # Default selects all features
-  st.markdown(f"Your selected options: {selection}")
+  
   valid_selection = [col for col in selection if col in df.columns]
   df_selected = df[valid_selection]
   # Slider to select the number of rows (for dynamic clustering)
