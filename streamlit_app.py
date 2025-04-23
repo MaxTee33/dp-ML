@@ -15,7 +15,6 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-import scipy.cluster.hierarchy as sch
 
 
 st.title('🤯 Wastewater Treatment Plants')
