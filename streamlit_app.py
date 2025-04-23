@@ -121,15 +121,9 @@ with st.expander('Agglomerative Clustering'):
 
     
     numerical_features['Cluster Label'] = agg_labels
-    # Display the clustered data (data points grouped by cluster label)
-    grouped_nf = numerical_features.groupby('Cluster Label').mean()  # Average of each feature per cluster
     cluster_summary = numerical_features.groupby('Cluster Label').describe() #Calculate descriptive statistics for each cluster
-    st.write('Average of each feature per cluster', grouped_nf)
     st.write('Average of each feature per cluster', cluster_summary)
 
-    with st.expander('value & label'):
-      agg_labels.rename(columns={'value': 'Cluster labels'}, inplace=True)
-      st.write(agg_labels)
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
