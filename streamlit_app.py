@@ -191,7 +191,7 @@ with st.expander('Mean Shift'):
         st.write(f"Number of rows selected: {num_rows}")
       
         num_bandwidth = st.slider("Select the desired Bandwidth", 1, 40, 10) 
-        st.write(f"Number of rows selected: {num_rows}")
+        st.write(f"Selected bandwidth selected: {num_rows}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
@@ -204,7 +204,7 @@ with st.expander('Mean Shift'):
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
-        visualize_clusters(X_pca, mean_shift_labels, 'Mean Shift')
+        visualize_clusters(X_scaled, mean_shift_labels, 'Mean Shift')
 
         try:
             # Silhouette Score
