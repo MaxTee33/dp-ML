@@ -124,7 +124,7 @@ with st.expander('Affinity Propagation'):
           preference_set = True
           st.write('Now, your preference is:', preference_dynamic)
       else:
-          st.write("Goodbye")
+          st.write('Now, your preference is:', preference_dynamic)
       
       
       # Apply Affinity Propagation
