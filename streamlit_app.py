@@ -189,7 +189,7 @@ with st.expander('Mean Shift'):
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Number of rows selected: {num_rows}")
       
-        bandwidth = st.slider("Select the desired Number of Rows", 1, 40, 10) 
+        num_bandwidth = st.slider("Select the desired Bandwidth", 1, 40, 10) 
         st.write(f"Number of rows selected: {num_rows}")
         
         # StandardScaler and PCA
@@ -199,7 +199,7 @@ with st.expander('Mean Shift'):
         X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
-        mean_shift = MeanShift(bandwidth=bandwidth)
+        mean_shift = MeanShift(bandwidth=num_bandwidth)
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
