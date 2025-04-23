@@ -113,7 +113,7 @@ with st.expander('Affinity Propagation'):
       st.write('Now, your preference is:', preference_dynamic)
       
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference_dynamic)
+      aff_prop = AffinityPropagation(preference=preference_dynamic)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
