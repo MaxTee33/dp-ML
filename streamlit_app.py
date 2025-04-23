@@ -62,10 +62,10 @@ def visualize_clusters(X, labels, title):
 # Expander of Agglomerative Clustering
 with st.expander('Agglomerative Clustering'):
   selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
-  valid_selection = [col for col in selection if col in df.columns]
+  AC_selection = [col for col in selection if col in df.columns]
   
-  if len(valid_selection) >= 2:
-    df_selected = df[valid_selection]
+  if len(AC_selection) >= 2:
+    df_selected = df[AC_selection]
     num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
     st.write(f"Number of rows selected: {num_rows}")
     n_clusters = st.slider("Select number of clusters", 1, 10, 3)
