@@ -112,7 +112,7 @@ with st.expander('Agglomerative Clustering'):
     X_pca = pca.fit_transform(X_scaled)
     agg_clustering = AgglomerativeClustering(n_clusters)
     agg_labels = agg_clustering.fit_predict(X_scaled)
-    st.write(X_pca, agg_labels)
+
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
     
     #The silhouette ranges from -1 to +1. Score close to +1 indicates that the clusters well-separated, Close to -1 indicates clusters  poorly separated
@@ -122,8 +122,14 @@ with st.expander('Agglomerative Clustering'):
     
     numerical_features['Cluster Label'] = agg_labels
     # Display the clustered data (data points grouped by cluster label)
-    grouped_df = numerical_features.groupby('Cluster Label').mean()  # Average of each feature per cluster
-    st.write('Average of each feature per cluster', grouped_df)
+    grouped_nf = numerical_features.groupby('Cluster Label').mean()  # Average of each feature per cluster
+    cluster_summary = numerical_features.groupby('Cluster Label').describe() #Calculate descriptive statistics for each cluster
+    st.write('Average of each feature per cluster', grouped_nf)
+    st.write('Average of each feature per cluster', cluster_summary)
+
+    with.expander('value & label'):
+      agg_labels.rename(columns={'value': 'Cluster labels'}, inplace=True)
+      st.write(agg_labels)
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
