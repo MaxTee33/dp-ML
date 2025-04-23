@@ -20,6 +20,8 @@ st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
 
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
+options = df.columns.tolist()
+options
 # Define numerical and categorical features
 numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 categorical_features = ['Year', 'Month', 'Day']
@@ -99,6 +101,8 @@ with st.expander('Clusters'):
   options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
   selection = st.multiselect("Select features", options, default=options)
   valid_selection = [col for col in selection if col in df.columns]
+
+  
   X = df[valid_selection]
   num_entries = X.shape[0]
 
