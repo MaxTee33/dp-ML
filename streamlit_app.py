@@ -99,7 +99,7 @@ with st.expander('Clusters'):
     
     df_selected = df[valid_selection]
     
-    num_rows = st.slider("Select a range of number of rows", 1, len(df), len(df))  # Use the actual number of rows in df
+    num_rows = st.slider("Select a range of number of rows", 10, len(df), len(df))  # Use the actual number of rows in df
     st.write(f"Number of rows selected: {num_rows}")
     n_clusters = st.slider("Select number of clusters", 1, 10, 3)
 
@@ -116,7 +116,7 @@ with st.expander('Clusters'):
     
   else:
     # Perform clustering and visualization if exactly two features are selected
-    st.write("Please select more than two features to display the scatter plot.")
+    st.write("Please select more than one features to display the scatter plot.")
 
 
 
