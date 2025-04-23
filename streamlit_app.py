@@ -73,17 +73,7 @@ with st.sidebar:
           'Average Humidity' : [Avg_Humidity]
          }
 
-with st.expander('Clusters'):
-  # Prepare the dataset by selecting only the numeric features
-  X = df[numeric_features]
-  
-  # Normalize the data
-  scaler = StandardScaler()
-  X_scaled = scaler.fit_transform(X)
-  
-  # Apply PCA to reduce dimensions for visualization (2D) if needed
-  pca = PCA(n_components=2)
-  X_pca = pca.fit_transform(X_scaled)
+
   
   # Function to visualize clustering results with color map
   def visualize_clusters(X, labels, title):
@@ -99,6 +89,15 @@ with st.expander('Clusters'):
       plt.ylabel('PCA Component 2')
       plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
       st.pyplot(plt)  # Display the plot in Streamlit
+
+
+with st.expander('Clusters'):
+  X = df[numeric_features]
+  scaler = StandardScaler()
+  X_scaled = scaler.fit_transform(X)
+  # Apply PCA to reduce dimensions for visualization (2D) if needed
+  pca = PCA(n_components=3)
+  X_pca = pca.fit_transform(X_scaled)
   
   # Main function for clustering
   if __name__ == "__main__":
