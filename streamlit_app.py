@@ -108,16 +108,11 @@ with st.expander('Clusters'):
   pca = PCA(n_components=2)
   X_pca = pca.fit_transform(X_scaled)
    # Ensure at least two features are selected for clustering and visualization
-  if len(valid_selection) >= 2:
-    
-    # Perform Agglomerative Clustering
-    agg_clustering = AgglomerativeClustering(n_clusters=6)  # 6 clusters, or you can dynamically choose this as well
-    agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
-     
-        # Visualize the clustering results using the function
-        visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
-    else:
-        st.markdown("Please select at least two features to display the scatter plot.")
+
+  agg_clustering = AgglomerativeClustering(n_clusters=6)  # 6 clusters, or you can dynamically choose this as well
+  agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+  # Visualize the clustering results using the function
+  visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
 
 
 
