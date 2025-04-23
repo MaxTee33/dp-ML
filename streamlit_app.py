@@ -16,15 +16,17 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
 
-
 st.title('🤯 Wastewater Treatment Plants')
 st.info('Clustering Energy Consumption Profiles')
 
+df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
+# Define numerical and categorical features
+numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
+categorical_features = ['Year', 'Month', 'Day']
 
 
 with st.expander('Data'):
   st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
   st.write(df.head())  # Display the first few rows of the data
 
   st.write('**X**')
@@ -35,9 +37,7 @@ with st.expander('Data'):
   y = df.Avg_Outflow
   st.write(y)
 
-# Define numerical and categorical features
-numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-categorical_features = ['Year', 'Month', 'Day']
+
 
 
 with st.sidebar:
@@ -97,6 +97,9 @@ with st.sidebar:
   pca = PCA(n_components=3)
   X_pca = pca.fit_transform(X_scaled)
 
+options = ['Avarage Outflow', 'Average Inflow', 'Energy Consumption', 'Ammonia', 'BOD', 'COD','TN', 'Average Temperature', 'Max Temperature', 'Min Temperature', 'Avg Humidity']
+selection = st.pills("features", options, selection_mode="multi")
+st.markdown(f"Your selected options: {selection}.")
 
 with st.expander('Clusters'):
 
