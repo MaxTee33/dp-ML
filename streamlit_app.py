@@ -82,7 +82,7 @@ with st.sidebar:
       df['Cluster'] = labels  # Add the cluster labels as a new column
       
       # Set up the plot with a color map
-      plt.figure(figsize=(16, 14))
+      plt.figure(figsize=(12, 10))
       scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
       plt.title(title)
       plt.xlabel('PCA Component 1')
@@ -91,18 +91,20 @@ with st.sidebar:
       st.pyplot(plt)  # Display the plot in Streamlit
 
 
-with st.expander('Clusters'):
   X = df[numeric_features]
   scaler = StandardScaler()
   X_scaled = scaler.fit_transform(X)
-  # Apply PCA to reduce dimensions for visualization (2D) if needed
   pca = PCA(n_components=3)
   X_pca = pca.fit_transform(X_scaled)
+
+
+with st.expander('Clusters'):
+
   
   # Main function for clustering
   if __name__ == "__main__":
       # 1. Generate sample data
-      np.random.seed(42)
+      np.random.seed(22)
       X = np.random.randn(1000, 2)  # 100 samples, 5 features
       
       # 2. Scale the data
