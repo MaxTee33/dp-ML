@@ -76,67 +76,56 @@ with st.sidebar:
 
 
   
-  # Function to visualize clustering results with color map
-  def visualize_clusters(X, labels, title):
-      # Create a DataFrame for easier handling
-      df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
-      df['Cluster'] = labels  # Add the cluster labels as a new column
-      
-      # Set up the plot with a color map
-      plt.figure(figsize=(12, 10))
-      scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
-      plt.title(title)
-      plt.xlabel('PCA Component 1')
-      plt.ylabel('PCA Component 2')
-      plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
-      st.pyplot(plt)  # Display the plot in Streamlit
+ # Function to visualize clustering results with color map
+def visualize_clusters(X, labels, title):
+  
+  # Create a DataFrame for easier handling
+  df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
+  df['Cluster'] = labels  # Add the cluster labels as a new column
+    
+  # Set up the plot with a color map
+  plt.figure(figsize=(12, 10))
+  scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
+  plt.title(title)
+  plt.xlabel('PCA Component 1')
+  plt.ylabel('PCA Component 2')
+  plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
+  st.pyplot(plt)  # Display the plot in Streamlit
 
+# Upload or load your CSV file (this can be done by Streamlit's file uploader or pre-loaded dataframe)
+df = pd.read_csv('path_to_your_file.csv')  # Replace with your actual file path
 
-
-
-
+# Using Streamlit expander for clusters
 with st.expander('Clusters'):
+  
   # List of options for feature selection
+  options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD', 'TN', 
+             'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
   
-  
-  options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-  selection = st.multiselect("Select features", options, default=options)
+  # Streamlit multiselect widget for feature selection
+  selection = st.multiselect("Select features", options, default=options)  # Default selects all features
   valid_selection = [col for col in selection if col in df.columns]
   df_selected = df[valid_selection]
-  
+  # Slider to select the number of rows (for dynamic clustering)
+  num_rows = st.slider("Select a range of number of rows", 0, len(df), len(df))  # Use the actual number of rows in df
+  st.write(f"Number of rows selected: {num_rows}")
 
-  num_rows = st.slider("Select a range of number rows", 0, 1000)
-  st.write("Values:", num_rows)
-  
+  # StandardScaler and PCA
   scaler = StandardScaler()
-  X_scaled = scaler.fit_transform(df_selected)
-  pca = PCA(n_components=3)
+  X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+  pca = PCA(n_components=2)
   X_pca = pca.fit_transform(X_scaled)
-
-  if len(valid_selection) => 2:
-    if __name__ == "__main__":
-        # 1. Generate sample data
-        np.random.seed(42)
-        X = np.random.randn(num_rows, 3)
-        
-        # 2. Scale the data
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-        
-        # 3. Perform PCA to reduce to 2 components (for visualization)
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X_scaled)
-        
-        # 4. Perform Agglomerative Clustering
-        agg_clustering = AgglomerativeClustering(n_clusters=6)  # 3 clusters
-        agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
-        
-        # 5. Visualize the clustering results using the function
+   # Ensure at least two features are selected for clustering and visualization
+  if len(valid_selection) >= 2:
+    
+    # Perform Agglomerative Clustering
+    agg_clustering = AgglomerativeClustering(n_clusters=6)  # 6 clusters, or you can dynamically choose this as well
+    agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+     
+        # Visualize the clustering results using the function
         visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
-      
     else:
-      st.markdown("Please select exactly two features to display the scatter plot.")
-
+        st.markdown("Please select at least two features to display the scatter plot.")
 
 
 
