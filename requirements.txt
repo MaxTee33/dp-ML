@@ -4,3 +4,12 @@ hdbscan
 StandardScaler
 seaborn
 missingno
+PCA
+matplotlib.pyplot
+MLPClassifier
+make_blobs
+AgglomerativeClustering
+AffinityPropagation
+MeanShift
+OPTICS
+matplotlib.pyplot
