@@ -124,9 +124,9 @@ with st.expander('Affinity Propagation'):
       AP_numerical_features['Cluster Label'] = aff_labels
       cluster_summary = AP_numerical_features.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
       st.write('Average of each feature per cluster', cluster_summary)
-    
-   else:
-      st.write("Please select more than one feature to display the scatter plot.")
+  
+  else:
+    st.write("Please select more than one feature to display the scatter plot.")
 
 
 
