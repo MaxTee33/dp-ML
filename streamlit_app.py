@@ -102,7 +102,7 @@ with st.expander('Clusters'):
   X = df[valid_selection]
   num_entries = X.shape[0]
 
-  num_rows = st.slider("Select a range of number rows", 0, 1100)
+  num_rows = st.slider("Select a range of number rows", 0, 2000)
   st.write("Values:", num_rows)
   
   scaler = StandardScaler()
