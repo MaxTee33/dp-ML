@@ -91,20 +91,21 @@ with st.sidebar:
       st.pyplot(plt)  # Display the plot in Streamlit
 
 
-# List of options for feature selection
-options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-
-selection = st.multiselect("Select features", options, default=options)
-valid_selection = [col for col in selection if col in df.columns]
-X = df[valid_selection]
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-pca = PCA(n_components=3)
-X_pca = pca.fit_transform(X_scaled)
 
 
 
 with st.expander('Clusters'):
+  # List of options for feature selection
+  options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
+  
+  selection = st.multiselect("Select features", options, default=options)
+  valid_selection = [col for col in selection if col in df.columns]
+  X = df[valid_selection]
+  scaler = StandardScaler()
+  X_scaled = scaler.fit_transform(X)
+  pca = PCA(n_components=3)
+  X_pca = pca.fit_transform(X_scaled)
+  
   if __name__ == "__main__":
       # 1. Generate sample data
       np.random.seed(12)
@@ -119,7 +120,7 @@ with st.expander('Clusters'):
       X_pca = pca.fit_transform(X_scaled)
       
       # 4. Perform Agglomerative Clustering
-      agg_clustering = AgglomerativeClustering(n_clusters=1)  # 3 clusters
+      agg_clustering = AgglomerativeClustering(n_clusters=6)  # 3 clusters
       agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
       
       # 5. Visualize the clustering results using the function
