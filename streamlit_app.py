@@ -26,8 +26,6 @@ df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/ma
 numeric_features = df[['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD', 'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']]
 
 st.write(numeric_features)
-
-
 with st.expander('Data'):
   st.write('**Raw data**')
   st.write(df.head())  # Display the first few rows of the data
