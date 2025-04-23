@@ -123,7 +123,7 @@ with st.expander('Affinity Propagation'):
       if right.button("Use mean as preference", use_container_width=True):
           preference_dynamic = np.mean(similarity_matrix)
           preference_set = True
-          right.markdown(f'Now, your preference is', preference_dynamic)
+          right.markdown('Now, your preference is', preference_dynamic)
           
       else:
           st.write('Now, your preference is using: default')
