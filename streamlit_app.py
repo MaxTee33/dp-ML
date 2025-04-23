@@ -117,12 +117,12 @@ with st.expander('Affinity Propagation'):
       if st.button("Use median as preference", use_container_width=True):
           preference_dynamic = np.median(similarity_matrix)
           preference_set = True
-          st.write('Now, your preference is: {preference_dynamic}')
+          st.write('Now, your preference is:', preference_dynamic)
         
-      if st.button('Use mean as preference' ,use_container_width=True)
+      if st.button('Use mean as preference' ,use_container_width=True):
           preference_dynamic = np.mean(similarity_matrix)
           preference_set = True
-          st.write('Now, your preference is: {preference_dynamic}')
+          st.write('Now, your preference is:', preference_dynamic)
       else:
           st.write("Goodbye")
       
