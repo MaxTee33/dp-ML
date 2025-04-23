@@ -101,6 +101,8 @@ with st.expander('Clusters'):
   selection = st.multiselect("Select features", options, default=options)
   valid_selection = [col for col in selection if col in df.columns]
   X = df[valid_selection]
+  num_entries = X.shape[0]
+  
   scaler = StandardScaler()
   X_scaled = scaler.fit_transform(X)
   pca = PCA(n_components=3)
@@ -108,8 +110,8 @@ with st.expander('Clusters'):
   
   if __name__ == "__main__":
       # 1. Generate sample data
-      np.random.seed(12)
-      X = np.random.randn(100, 2)  # 100 samples, 5 features
+      np.random.seed(42)
+      X = np.random.randn(1000, num_entries)
       
       # 2. Scale the data
       scaler = StandardScaler()
