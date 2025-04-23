@@ -98,7 +98,7 @@ with st.expander('Clusters'):
       plt.xlabel('PCA Component 1')
       plt.ylabel('PCA Component 2')
       plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
-      st.pyplot()  # Display the plot in Streamlit
+      st.pyplot(plt)  # Display the plot in Streamlit
   
   # Main function for clustering
   if __name__ == "__main__":
