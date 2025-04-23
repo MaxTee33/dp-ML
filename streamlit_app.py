@@ -109,8 +109,22 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
-      preference_dynamic = np.median(similarity_matrix)
-      st.write('Now, your preference is:', preference_dynamic)
+      preference_dynamic = None
+      
+      left, middle, right = st.columns(3)
+      if left.button("Use default as perference", use_container_width=True):
+        preference_dynamic = None
+        left.markdown('Now, your preference is:', preference_dynamic)
+        
+      if middle.button("Use mediam as perference", use_container_width=True):
+        preference_dynamic = np.median(similarity_matrix)
+        middle.markdown('Now, your preference is:', preference_dynamic)
+        
+      if right.button("Use meam as perference", use_container_width=True):
+          preference_dynamic = np.median(similarity_matrix)
+          right.markdown('Now, your preference is:', preference_dynamic)
+        
+
       
       # Apply Affinity Propagation
       aff_prop = AffinityPropagation(preference=preference_dynamic)
