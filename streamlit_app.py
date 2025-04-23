@@ -26,6 +26,9 @@ df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/ma
 numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 #categorical_features = ['Year', 'Month', 'Day']
 
+existing_columns = [col for col in columns_to_select if col in df.columns]
+st.write(existing_columns)
+
 num_feature = df[numeric_features]
 st.write(num_feature)
 
