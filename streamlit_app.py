@@ -26,7 +26,7 @@ df.numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'B
 df.categorical_features = ['Year', 'Month', 'Day']
 
 
-options = numeric_features.columns.tolist()
+options = df.numeric_features.columns.tolist()
 st.write("Here is my list:", options)
 
 with st.expander('Data'):
