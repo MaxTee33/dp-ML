@@ -119,7 +119,7 @@ with st.expander('Clusters'):
       X_pca = pca.fit_transform(X_scaled)
       
       # 4. Perform Agglomerative Clustering
-      agg_clustering = AgglomerativeClustering(n_clusters=3)  # 3 clusters
+      agg_clustering = AgglomerativeClustering(n_clusters=1)  # 3 clusters
       agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
       
       # 5. Visualize the clustering results using the function
