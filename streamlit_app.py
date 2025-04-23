@@ -127,7 +127,7 @@ with st.expander('Agglomerative Clustering'):
     st.write('Average of each feature per cluster', grouped_nf)
     st.write('Average of each feature per cluster', cluster_summary)
 
-    with.expander('value & label'):
+    with st.expander('value & label'):
       agg_labels.rename(columns={'value': 'Cluster labels'}, inplace=True)
       st.write(agg_labels)
     
