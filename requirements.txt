@@ -5,7 +5,7 @@ StandardScaler
 seaborn
 missingno
 PCA
-MLPClassifier
+scikit-learn
 make_blobs
 AgglomerativeClustering
 AffinityPropagation
