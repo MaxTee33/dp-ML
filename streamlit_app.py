@@ -61,7 +61,8 @@ def visualize_clusters(X, labels, title):
 
 # Expander of Agglomerative Clustering
 with st.expander('Agglomerative Clustering'):
-  selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
+  AC_numerical_features = numerical_features
+  selection = st.multiselect("Select features", AC_numerical_features.columns.tolist(), default=[])  # Default selects all features
   AC_selection = [col for col in selection if col in df.columns]
   
   if len(AC_selection) >= 2:
@@ -77,7 +78,6 @@ with st.expander('Agglomerative Clustering'):
     X_pca = pca.fit_transform(X_scaled)
     agg_clustering = AgglomerativeClustering(n_clusters)
     agg_labels = agg_clustering.fit_predict(X_scaled)
-
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
     
     #The silhouette ranges from -1 to +1. Score close to +1 indicates that the clusters well-separated, Close to -1 indicates clusters  poorly separated
@@ -85,13 +85,13 @@ with st.expander('Agglomerative Clustering'):
     st.write('Silhouette Score:', silhouette_avg)
 
     
-    numerical_features['Cluster Label'] = agg_labels
-    cluster_summary = numerical_features.groupby('Cluster Label').describe() #Calculate descriptive statistics for each cluster
+    AC_numerical_features['Cluster Label'] = agg_labels
+    cluster_summary = AC_numerical_features.groupby('Cluster Label').describe() #Calculate descriptive statistics for each cluster
     st.write('Average of each feature per cluster', cluster_summary)
-
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
+
 
 # Expander of Affinity Propagation
 with st.expander('Affinity Propagation'):
