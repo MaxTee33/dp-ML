@@ -97,14 +97,12 @@ with st.sidebar:
   pca = PCA(n_components=3)
   X_pca = pca.fit_transform(X_scaled)
 
-options = ['Avarage Outflow', 'Average Inflow', 'Energy Consumption', 'Ammonia', 'BOD', 'COD','TN', 'Average Temperature', 'Max Temperature', 'Min Temperature', 'Avg Humidity']
+options = ["Avarage Outflow", "Average Inflow", 'Energy Consumption', 'Ammonia', 'BOD', 'COD','TN', 'Average Temperature', 'Max Temperature', 'Min Temperature', 'Avg Humidity']
 selection = st.pills("features", options, selection_mode="multi")
 st.markdown(f"Your selected options: {selection}.")
 
-with st.expander('Clusters'):
 
-  
-  # Main function for clustering
+with st.expander('Clusters'):
   if __name__ == "__main__":
       # 1. Generate sample data
       np.random.seed(12)
