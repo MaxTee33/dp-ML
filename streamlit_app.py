@@ -16,8 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
 
-st.title('🤯 Wastewater Treatment Plants')
-st.info('Clustering Energy Consumption Profiles')
+
 
 
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/processed_data.xls')
