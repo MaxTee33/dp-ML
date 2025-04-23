@@ -97,11 +97,13 @@ with st.sidebar:
 with st.expander('Clusters'):
   # List of options for feature selection
   options = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-  
   selection = st.multiselect("Select features", options, default=options)
   valid_selection = [col for col in selection if col in df.columns]
   X = df[valid_selection]
   num_entries = X.shape[0]
+
+  num_rows = st.slider("Select a range of values", 0, 1100，100)
+  st.write("Values:", num_rows)
   
   scaler = StandardScaler()
   X_scaled = scaler.fit_transform(X)
@@ -111,7 +113,7 @@ with st.expander('Clusters'):
   if __name__ == "__main__":
       # 1. Generate sample data
       np.random.seed(42)
-      X = np.random.randn(1000, num_entries)
+      X = np.random.randn(num_rows, num_entries)
       
       # 2. Scale the data
       scaler = StandardScaler()
