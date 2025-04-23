@@ -4,6 +4,7 @@ import numpy as np
 import seaborn as sns
 import missingno as msno
 import warnings
+import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 from sklearn.cluster import AgglomerativeClustering, AffinityPropagation, MeanShift, OPTICS
