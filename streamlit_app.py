@@ -91,7 +91,7 @@ def visualize_clusters(X, labels, title):
   
 # Using Streamlit expander for clusters
 with st.expander('Clusters'):
-  selection = st.multiselect("Select features", numerical_features, numerical_features=numerical_features)  # Default selects all features
+  selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[])  # Default selects all features
   
   valid_selection = [col for col in selection if col in df.columns]
   df_selected = df[valid_selection]
