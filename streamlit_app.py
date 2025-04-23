@@ -114,9 +114,16 @@ with st.expander('Agglomerative Clustering'):
     agg_labels = agg_clustering.fit_predict(X_scaled)
     st.write(X_pca, agg_labels)
     visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
-
+    
+    #The silhouette ranges from -1 to +1. Score close to +1 indicates that the clusters well-separated, Close to -1 indicates clusters  poorly separated
     silhouette_avg = silhouette_score(X_scaled, agg_labels)
     st.write('Silhouette Score:', silhouette_avg)
+
+    
+    df['Cluster Label'] = agg_labels
+    # Display the clustered data (data points grouped by cluster label)
+    grouped_df = df.groupby('Cluster Label').mean()  # Average of each feature per cluster
+    st.write(grouped_df)
     
   else:
     st.write("Please select more than one features to display the scatter plot.")
