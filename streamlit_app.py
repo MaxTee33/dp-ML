@@ -99,7 +99,7 @@ with st.expander('Clusters'):
   valid_selection = [col for col in selection if col in df.columns]
   df_selected = df[valid_selection]
   # Slider to select the number of rows (for dynamic clustering)
-  num_rows = st.slider("Select a range of number of rows", 1, len(df), len(df)，（ len(df), len(df) ）)  # Use the actual number of rows in df
+  num_rows = st.slider("Select a range of number of rows", 1, len(df), len(df)，（len(df), len(df)）)  # Use the actual number of rows in df
   st.write(f"Number of rows selected: {num_rows}")
 
   # StandardScaler and PCA
