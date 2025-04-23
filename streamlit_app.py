@@ -28,7 +28,7 @@ numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD'
 
 # Select numeric features
 num_feature = df[numeric_features]
-
+st.warite(num_feature)
 
 
 with st.expander('Data'):
