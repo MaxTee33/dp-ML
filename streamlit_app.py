@@ -3,12 +3,18 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import missingno as msno
+import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
+from sklearn.cluster import AgglomerativeClustering, AffinityPropagation, MeanShift, OPTICS
 import hdbscan
+from sklearn.datasets import make_blobs
+from sklearn.neural_network import MLPClassifier
 
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
 
 
 st.title('🤯 Wastewater Treatment Plants')
@@ -30,10 +36,7 @@ with st.expander('Data'):
   st.write(y)
 
 # Define numerical and categorical features
-numeric_features = [
-    'Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD',
-    'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity'
-]
+numeric_features = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD','TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
 categorical_features = ['Year', 'Month', 'Day']
 
 
