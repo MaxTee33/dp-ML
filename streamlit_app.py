@@ -84,36 +84,40 @@ with st.expander('Clusters'):
   pca = PCA(n_components=2)
   X_pca = pca.fit_transform(X_scaled)
   
-  # Function to visualize clustering results using Streamlit
   def visualize_clusters(X, labels, title):
-      # Create a DataFrame for easier handling in Streamlit
-      df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
-      df['Cluster'] = labels  # Add the cluster labels as a new column
-      
-      # Display scatter chart using Streamlit
-      st.title(title)
-      st.scatter_chart(df.set_index('Cluster'))  # Cluster as the index, values for visualization
-  
-  # Example usage with random data
-  if __name__ == "__main__":
-      # 1. Generate sample data
-      np.random.seed(42)
-      X = np.random.randn(100, 5)  # 100 samples, 5 features
-      
-      # 2. Scale the data
-      scaler = StandardScaler()
-      X_scaled = scaler.fit_transform(X)
-      
-      # 3. Perform PCA to reduce to 2 components (for visualization)
-      pca = PCA(n_components=2)
-      X_pca = pca.fit_transform(X_scaled)
-      
-      # 4. Perform Agglomerative Clustering
-      agg_clustering = AgglomerativeClustering(n_clusters=3)  # 3 clusters
-      agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
-      
-      # 5. Visualize the clustering results using the function
-      visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
+    # Create a DataFrame for easier handling
+    df = pd.DataFrame(X, columns=["PCA Component 1", "PCA Component 2"])
+    df['Cluster'] = labels  # Add the cluster labels as a new column
+    
+    # Set up the plot with a color map
+    plt.figure(figsize=(8, 6))
+    scatter = plt.scatter(df['PCA Component 1'], df['PCA Component 2'], c=df['Cluster'], cmap='viridis', edgecolor='k', s=100)
+    plt.title(title)
+    plt.xlabel('PCA Component 1')
+    plt.ylabel('PCA Component 2')
+    plt.colorbar(scatter, label='Cluster Label')  # Color bar to show the cluster labels
+    st.pyplot()  # Display the plot in Streamlit
+
+    # Example usage with random data
+    if __name__ == "__main__":
+        # 1. Generate sample data
+        np.random.seed(42)
+        X = np.random.randn(100, 5)  # 100 samples, 5 features
+        
+        # 2. Scale the data
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        
+        # 3. Perform PCA to reduce to 2 components (for visualization)
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+        
+        # 4. Perform Agglomerative Clustering
+        agg_clustering = AgglomerativeClustering(n_clusters=3)  # 3 clusters
+        agg_labels = agg_clustering.fit_predict(X_scaled)  # Cluster labels
+    
+    # 5. Visualize the clustering results using the function
+    visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
 
 
 
