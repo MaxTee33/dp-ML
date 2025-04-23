@@ -109,20 +109,25 @@ with st.expander('Affinity Propagation'):
       X_pca = pca.fit_transform(X_scaled)
 
       similarity_matrix = pairwise_distances(X_scaled, metric='euclidean')
+
       preference_dynamic = None
+      preference_set = False
+      # Create columns in the layout
+      left, right = st.columns(2)
+      # Define the button actions
       
-      left, middle, right = st.columns(3)
-      if left.button("Use default as perference", use_container_width=True):
-        left.markdown('Now, your preference is:', preference_dynamic)
-        preference_dynamic = None
-        
-      if middle.button("Use mediam as perference", use_container_width=True):
-        middle.markdown('Now, your preference is:', preference_dynamic)
-        preference_dynamic = np.median(similarity_matrix)
-        
-      if right.button("Use meam as perference", use_container_width=True):
-          right.markdown('Now, your preference is:', preference_dynamic)
+      if left.button("Use median as preference", use_container_width=True):
           preference_dynamic = np.median(similarity_matrix)
+          preference_set = True
+          left.markdown(f'Now, your preference is: {preference_dynamic}')
+      
+      if right.button("Use mean as preference", use_container_width=True):
+          preference_dynamic = np.mean(similarity_matrix)
+          preference_set = True
+          right.markdown(f'Now, your preference is: {preference_dynamic}')
+      
+      else:
+          st.write('Now, your preference is using: default')
 
       
       # Apply Affinity Propagation
