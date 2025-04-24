@@ -195,7 +195,9 @@ with st.expander('Mean Shift'):
         
         # StandardScaler and PCA
         scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected row
+        pca = PCA(n_components=3)
+        X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
         mean_shift = MeanShift(bandwidth=num_bandwidth)
@@ -206,7 +208,7 @@ with st.expander('Mean Shift'):
 
         try:
             # Silhouette Score
-            silhouette_avg = silhouette_score(X_scaled, mean_shift_labels)
+            silhouette_avg = silhouette_score(X_pca, mean_shift_labels)
             st.write('Silhouette Score:', silhouette_avg)
         except Exception as e:
             st.write("Can't Calculate Silhouette Score Because of Single Cluster Scenario!") 
