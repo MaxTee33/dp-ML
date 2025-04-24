@@ -196,15 +196,13 @@ with st.expander('Mean Shift'):
         # StandardScaler and PCA
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected row
-        pca = PCA(n_components=3)
-        X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
         mean_shift = MeanShift(bandwidth=num_bandwidth)
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
-        visualize_clusters(X_pca, mean_shift_labels, 'Mean Shift')
+        visualize_clusters(X_scaled, mean_shift_labels, 'Mean Shift')
 
         try:
             # Silhouette Score
