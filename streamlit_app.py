@@ -196,7 +196,7 @@ with st.expander('Mean Shift'):
         # StandardScaler and PCA
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected row
-        pca = PCA(n_components=4)
+        pca = PCA(n_components=1)
         X_pca = pca.fit_transform(X_scaled)
         
         # Apply Mean Shift
