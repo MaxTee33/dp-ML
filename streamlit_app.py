@@ -304,7 +304,7 @@ if len(valid_selection) >= 2:
         cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
     
-    else:
+else:
         st.write("Please select more than one feature to display the scatter plot.")
 
 
