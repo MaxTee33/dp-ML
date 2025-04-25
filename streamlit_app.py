@@ -303,7 +303,6 @@ def tune_som_with_multiple_selections(df):
         df_selected['Cluster Label'] = som_labels
         cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
-    
     else:
         st.write("Please select more than one feature to display the scatter plot.")
 
