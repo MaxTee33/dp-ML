@@ -25,8 +25,6 @@ st.info('Clustering Energy Consumption Profiles')
 
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/X_corr_filtered_df.csv')
 
-selected_columns = ['Avg_Outflow', 'Avg_Inflow', 'Energy_Cons', 'Ammonia', 'BOD', 'COD', 'TN', 'Avg_Temperature', 'Max_Temperature', 'Min_Temperature', 'Avg_Humidity']
-numerical_features = df[selected_columns]
 
 
 with st.expander('Data'):
@@ -59,7 +57,7 @@ def visualize_clusters(X, labels, title):
 
 # Expander of Agglomerative Clustering
 with st.expander('Agglomerative Clustering'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='agg_clustering')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='agg_clustering')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -82,8 +80,8 @@ with st.expander('Agglomerative Clustering'):
         silhouette_avg = silhouette_score(X_scaled, agg_labels)
         st.write('Silhouette Score:', silhouette_avg)
 
-        numerical_features['Cluster Label'] = agg_labels
-        cluster_summary = numerical_features.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        df['Cluster Label'] = agg_labels
+        cluster_summary = df.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
     
     else:
@@ -93,7 +91,7 @@ with st.expander('Agglomerative Clustering'):
 
 # Expander of Affinity Propagation
 with st.expander('Affinity Propagation'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='affinity_propagation')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='affinity_propagation')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
   
     if len(valid_selection) >= 2:
@@ -137,7 +135,7 @@ with st.expander('Affinity Propagation'):
 
 # Expender of HDBSCAN
 with st.expander('HDBSCAN'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='hdbscan')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='hdbscan')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -182,7 +180,7 @@ with st.expander('HDBSCAN'):
 
 # Expander of Mean Shift
 with st.expander('Mean Shift'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='mean_shift')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='mean_shift')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -228,7 +226,7 @@ with st.expander('Mean Shift'):
 
 # Expander of OPTICS
 with st.expander('OPTICS'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='optics')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='optics')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
@@ -265,7 +263,7 @@ with st.expander('OPTICS'):
 
 # Expander of Self-Organizing Maps (SOM)
 with st.expander('Self-Organizing Maps (SOM)'):
-    selection = st.multiselect("Select features", numerical_features.columns.tolist(), default=[], key='som')  # Added unique key
+    selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='som')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
     
     if len(valid_selection) >= 2:
