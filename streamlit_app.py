@@ -276,7 +276,7 @@ def tune_som_with_multiple_selections(df):
     # Select features and apply multiple selections
     valid_selection = st.multiselect("Select features", df.columns)
     
-    if len(valid_selection) >= 2:
+if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
@@ -287,56 +287,23 @@ def tune_som_with_multiple_selections(df):
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
         
-        # Define hyperparameter grid
-        x_values = [10, 15, 20]
-        y_values = [10, 15, 20]
-        sigma_values = [0.5, 1.0, 1.5]
-        learning_rate_values = [0.5, 0.1, 0.05]
-        epochs_values = [100, 200, 300]
-
-        # Iterate over all combinations of the hyperparameters
-        best_silhouette = -1
-        best_params = {}
+        # Define and train the SOM
+        som = MiniSom(5, 5, len(valid_selection), sigma=1.0, learning_rate=0.5)
+        som.train(X_scaled, 100)
         
-        for x in x_values:
-            for y in y_values:
-                for sigma in sigma_values:
-                    for learning_rate in learning_rate_values:
-                        for epochs in epochs_values:
-                            st.write(f"Training SOM with: x={x}, y={y}, sigma={sigma}, learning_rate={learning_rate}, epochs={epochs}")
-                            
-                            # Train SOM
-                            som = MiniSom(x=x, y=y, input_len=len(valid_selection), sigma=sigma, learning_rate=learning_rate, neighborhood_function='gaussian')
-                            som.train(X_scaled, epochs)
-                            
-                            # Get the cluster labels from SOM
-                            som_labels = np.array([som.winner(x)[0] * y + som.winner(x)[1] for x in X_scaled])
-                            
-                            # Calculate Silhouette Score
-                            silhouette_avg = silhouette_score(X_scaled, som_labels)
-                            st.write(f"Silhouette Score for SOM with (x={x}, y={y}, sigma={sigma}, learning_rate={learning_rate}, epochs={epochs}): {silhouette_avg}")
-                            
-                            if silhouette_avg > best_silhouette:
-                                best_silhouette = silhouette_avg
-                                best_params = {'x': x, 'y': y, 'sigma': sigma, 'learning_rate': learning_rate, 'epochs': epochs}
+        # Get the cluster labels from SOM
+        som_labels = np.array([som.winner(x)[0] * 5 + som.winner(x)[1] for x in X_scaled])
+        
+        visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM)')
+        
+        # Silhouette Score
+        silhouette_avg = silhouette_score(X_scaled, som_labels)
+        st.write('Silhouette Score:', silhouette_avg)
 
-        st.write(f"Best SOM parameters: {best_params} with Silhouette Score: {best_silhouette}")
-
-        # Visualize the best SOM clustering
-        som = MiniSom(x=best_params['x'], y=best_params['y'], input_len=len(valid_selection), sigma=best_params['sigma'], learning_rate=best_params['learning_rate'], neighborhood_function='gaussian')
-        som.train(X_scaled, best_params['epochs'])
-
-        # Get the cluster labels from the best SOM
-        som_labels = np.array([som.winner(x)[0] * best_params['y'] + som.winner(x)[1] for x in X_scaled])
-
-        # Visualize clusters
-        visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM) - Best Configuration')
-
-        # Add cluster labels to DataFrame and show summary
         df_selected['Cluster Label'] = som_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe()  # Calculate descriptive statistics for each cluster
+        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
-
+    
     else:
         st.write("Please select more than one feature to display the scatter plot.")
 
