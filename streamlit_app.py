@@ -66,7 +66,7 @@ with st.expander('Agglomerative Clustering'):
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
-        n_clusters = st.slider("Select number of clusters", 2, 10, 3)
+        n_clusters = st.slider("Select number of clusters", 2, 6, 2)
 
         # StandardScaler and PCA
         scaler = StandardScaler()
