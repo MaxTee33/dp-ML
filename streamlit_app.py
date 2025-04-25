@@ -270,12 +270,7 @@ with st.expander('OPTICS'):
 with st.expander('Self-Organizing Maps (SOM)'):
     selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='som')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
-    
-    # SOM tuning with user input for multiple selections
-def tune_som_with_multiple_selections(df):
-    # Select features and apply multiple selections
-    valid_selection = st.multiselect("Select features", df.columns)
-    
+        
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
