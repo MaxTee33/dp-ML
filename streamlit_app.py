@@ -276,7 +276,7 @@ def tune_som_with_multiple_selections(df):
     # Select features and apply multiple selections
     valid_selection = st.multiselect("Select features", df.columns)
     
-if len(valid_selection) >= 2:
+    if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
@@ -304,7 +304,7 @@ if len(valid_selection) >= 2:
         cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
     
-else:
+    else:
         st.write("Please select more than one feature to display the scatter plot.")
 
 
