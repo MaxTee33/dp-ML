@@ -63,8 +63,9 @@ with st.expander('Agglomerative Clustering'):
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
-        agg_clustering = AgglomerativeClustering(n_clusters)
+        agg_clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='ward', metric='euclidean')
         agg_labels = agg_clustering.fit_predict(X_scaled)
+
 
         visualize_clusters(X_pca, agg_labels, 'Agglomerative Clustering')
         
