@@ -26,7 +26,7 @@ st.info('Clustering Energy Consumption Profiles')
 df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/master/X_corr_filtered_df.csv')
 
 
-with st.expander('Dataset')
+with st.expander('Dataset'):
   st.write('**Raw data**')
   X = df.drop('Avg_Outflow', axis=1)
   st.write(X)
