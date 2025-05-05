@@ -198,7 +198,7 @@ with st.expander('Mean Shift'):
         mean_shift.fit(X_scaled)
         mean_shift_labels = mean_shift.labels_
         
-        visualize_clusters(X_pca, mean_shift_labels, 'Mean Shift')
+        visualize_clusters(X_scaled, mean_shift_labels, 'Mean Shift')
 
         try:
             # Silhouette Score
