@@ -279,25 +279,48 @@ with st.expander('Self-Organizing Maps (SOM)'):
         X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
+
+        # Define SOM grid size
+        som_size = 5  # x = y = 5
+        som = MiniSom(som_size, som_size, len(valid_selection), sigma=1.0, learning_rate=0.5)
+
+        # Train SOM
+        som.train(X_scaled, 300)  # 300 epochs
+
+        # Get cluster labels
+        som_labels = np.array([som.winner(x)[0] * som_size + som.winner(x)[1] for x in X_scaled])
         
-        # Define and train the SOM
-        som = MiniSom(5, 5, len(valid_selection), sigma=1.0, learning_rate=0.5)
-        som.train(X_scaled, 100)
-        
-        # Get the cluster labels from SOM
-        som_labels = np.array([som.winner(x)[0] * 5 + som.winner(x)[1] for x in X_scaled])
-        
+        # Visualization
         visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM)')
         
-        # Silhouette Score
-        silhouette_avg = silhouette_score(X_scaled, som_labels)
-        st.write('Silhouette Score:', silhouette_avg)
+        # Quantization Error
+        quantization_error = som.quantization_error(X_scaled)
+        st.write('Quantization Error:', quantization_error)
 
+        # Topographic Error
+        def topographic_error(som, data):
+            error_count = 0
+            for x in data:
+                dists = np.linalg.norm(som._weights - x, axis=2)
+                sorted_indices = np.unravel_index(np.argsort(dists, axis=None), dists.shape)
+                bmu1 = (sorted_indices[0][0], sorted_indices[1][0])
+                bmu2 = (sorted_indices[0][1], sorted_indices[1][1])
+                if abs(bmu1[0] - bmu2[0]) + abs(bmu1[1] - bmu2[1]) > 1:
+                    error_count += 1
+            return error_count / len(data)
+
+        topo_error = topographic_error(som, X_scaled)
+        st.write('Topographic Error:', topo_error)
+
+        # Cluster Summary
+        df_selected = df_selected.copy()
         df_selected['Cluster Label'] = som_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        cluster_summary = df_selected.groupby('Cluster Label').describe()
         st.write('Average of each feature per cluster', cluster_summary)
+
     else:
         st.write("Please select more than one feature to display the scatter plot.")
+
 
 
 
