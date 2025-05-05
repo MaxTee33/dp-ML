@@ -184,7 +184,7 @@ with st.expander('Mean Shift'):
         st.write(f"Selected number of rows: {num_rows}")
       
         num_bandwidth = st.slider("Select the desired Bandwidth", 0.5, 20, 2) 
-        st.write(f"Selected bandwidth selected: {num_rows}")
+        st.write(f"Selected bandwidth selected: {num_bandwidth}")
         
         # StandardScaler and PCA
         scaler = StandardScaler()
