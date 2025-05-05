@@ -221,7 +221,6 @@ with st.expander('Mean Shift'):
 
 
 
-
 # Expander of OPTICS
 with st.expander('OPTICS'):
     selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='optics')  # Added unique key
@@ -232,8 +231,8 @@ with st.expander('OPTICS'):
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
 
-        min_samples = st.slider("Select the desired Minimun Samples", 10, 15, 10) 
-        st.write(f"Selected bandwidth selected: {num_rows}")
+        min_samples = st.slider("Select the desired Minimum Samples", 5, 20, 10) 
+        st.write(f"Selected minimum samples: {min_samples}")
       
         # StandardScaler and PCA
         scaler = StandardScaler()
@@ -241,24 +240,27 @@ with st.expander('OPTICS'):
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
         
-        # Apply OPTICS
-        optics = OPTICS(min_samples=10)
+        # Apply OPTICS with specified parameters
+        optics = OPTICS(min_samples=min_samples, xi=0.05, min_cluster_size=0.1)
         optics.fit(X_scaled)
         optics_labels = optics.labels_
         
         visualize_clusters(X_pca, optics_labels, 'OPTICS')
         
         # Silhouette Score
-        silhouette_avg = silhouette_score(X_scaled, optics_labels)
-        st.write('Silhouette Score:', silhouette_avg)
+        if 1 < len(set(optics_labels)) < X_scaled.shape[0]:
+            silhouette_avg = silhouette_score(X_scaled, optics_labels)
+            st.write('Silhouette Score:', silhouette_avg)
+        else:
+            st.write("Cannot compute Silhouette Score due to too few valid clusters.")
 
+        df_selected = df_selected.copy()
         df_selected['Cluster Label'] = optics_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe() # Calculate descriptive statistics for each cluster
+        cluster_summary = df_selected.groupby('Cluster Label').describe()  # Descriptive statistics for each cluster
         st.write('Average of each feature per cluster', cluster_summary)
     
     else:
         st.write("Please select more than one feature to display the scatter plot.")
-
 
 
 
