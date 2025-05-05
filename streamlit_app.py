@@ -268,31 +268,28 @@ with st.expander('OPTICS'):
 with st.expander('Self-Organizing Maps (SOM)'):
     selection = st.multiselect("Select features", df.columns.tolist(), default=[], key='som')  # Added unique key
     valid_selection = [col for col in selection if col in df.columns]
-        
+
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))
         st.write(f"Selected number of rows: {num_rows}")
-        
+
         # StandardScaler and PCA
         scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(df_selected[:num_rows])  # Scale only the selected rows
+        X_scaled = scaler.fit_transform(df_selected[:num_rows])
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
 
-        # Define SOM grid size
-        som_size = 15  # x = y = 5
-        som = MiniSom(som_size, som_size, len(valid_selection), sigma=1.0, learning_rate=0.5)
-
-        # Train SOM
+        # Train SOM using best parameters
+        som = MiniSom(15, 15, len(valid_selection), sigma=1.0, learning_rate=0.5)
         som.train(X_scaled, 300)  # 300 epochs
 
-        # Get cluster labels
-        som_labels = np.array([som.winner(x)[0] * som_size + som.winner(x)[1] for x in X_scaled])
-        
-        # Visualization
+        # Assign cluster labels based on SOM winner nodes
+        som_labels = np.array([som.winner(x)[0] * 15 + som.winner(x)[1] for x in X_scaled])
+
+        # Visualization using PCA output
         visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM)')
-        
+
         # Quantization Error
         quantization_error = som.quantization_error(X_scaled)
         st.write('Quantization Error:', quantization_error)
@@ -312,7 +309,7 @@ with st.expander('Self-Organizing Maps (SOM)'):
         topo_error = topographic_error(som, X_scaled)
         st.write('Topographic Error:', topo_error)
 
-        # Cluster Summary
+        # Cluster summary
         df_selected = df_selected.copy()
         df_selected['Cluster Label'] = som_labels
         cluster_summary = df_selected.groupby('Cluster Label').describe()
@@ -320,6 +317,7 @@ with st.expander('Self-Organizing Maps (SOM)'):
 
     else:
         st.write("Please select more than one feature to display the scatter plot.")
+
 
 
 
