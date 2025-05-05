@@ -105,7 +105,7 @@ with st.expander('Affinity Propagation'):
       st.write(similarity_matrix)
      
       # Apply Affinity Propagation
-      aff_prop = AffinityPropagation(preference=preference)
+      aff_prop = AffinityPropagation(preference=preference, damping=0.9)
       aff_prop.fit(X_scaled)
       aff_labels = aff_prop.labels_
           
