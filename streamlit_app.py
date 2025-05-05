@@ -27,17 +27,9 @@ df = pd.read_csv('https://raw.githubusercontent.com/MaxTee33/dp-ML/refs/heads/ma
 
 
 
-with st.expander('Data'):
   st.write('**Raw data**')
-  st.write(df.head())  # Display the first few rows of the data
-
-  st.write('**X**')
   X = df.drop('Avg_Outflow', axis=1)
   st.write(X)
-
-  st.write('**Y**')
-  y = df.Avg_Outflow
-  st.write(y)
 
   
  # Function to visualize clustering results with color map
