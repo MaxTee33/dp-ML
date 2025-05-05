@@ -183,7 +183,7 @@ with st.expander('Mean Shift'):
         num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
       
-        num_bandwidth = st.slider("Select the desired Bandwidth", 0.5, 20, 2) 
+        num_bandwidth = st.slider("Select the desired Bandwidth", 0.5, 20.0, 2) 
         st.write(f"Selected bandwidth selected: {num_bandwidth}")
         
         # StandardScaler and PCA
