@@ -199,7 +199,7 @@ with st.expander('Mean Shift'):
 
         try:
             # Silhouette Score
-            silhouette_avg = silhouette_score(X_pca, mean_shift_labels)
+            silhouette_avg = silhouette_score(X_scaled, mean_shift_labels)
             st.write('Silhouette Score:', silhouette_avg)
         except Exception as e:
             st.write("Can't Calculate Silhouette Score Because of Single Cluster Scenario!") 
