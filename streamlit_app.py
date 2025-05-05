@@ -281,7 +281,7 @@ with st.expander('Self-Organizing Maps (SOM)'):
         X_pca = pca.fit_transform(X_scaled)
 
         # Define SOM grid size
-        som_size = 5  # x = y = 5
+        som_size = 15  # x = y = 5
         som = MiniSom(som_size, som_size, len(valid_selection), sigma=1.0, learning_rate=0.5)
 
         # Train SOM
