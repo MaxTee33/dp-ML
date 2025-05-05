@@ -290,9 +290,6 @@ with st.expander('Self-Organizing Maps (SOM)'):
         # Visualization using PCA output
         visualize_clusters(X_pca, som_labels, 'Self-Organizing Maps (SOM)')
 
-        # Quantization Error
-        quantization_error = som.quantization_error(X_scaled)
-        st.write('Quantization Error:', quantization_error)
 
         # Quantization Error
         quantization_error = som.quantization_error(X_scaled)
