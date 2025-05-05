@@ -135,7 +135,7 @@ with st.expander('HDBSCAN'):
     
     if len(valid_selection) >= 2:
         df_selected = df[valid_selection]
-        num_rows = st.slider("Select the desired Number of Rows", 10, len(df), len(df))  # Use the actual number of rows in df
+        num_rows = st.slider("Select the desired Number of Rows", 10, 1071, 1071)  # Use the actual number of rows in df
         st.write(f"Selected number of rows: {num_rows}")
 
         cluster_size = st.slider("Select the desired Cluster Size", 2, 15, 5) 
