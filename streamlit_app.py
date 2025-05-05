@@ -294,6 +294,10 @@ with st.expander('Self-Organizing Maps (SOM)'):
         quantization_error = som.quantization_error(X_scaled)
         st.write('Quantization Error:', quantization_error)
 
+        # Quantization Error
+        quantization_error = som.quantization_error(X_scaled)
+        st.write('Quantization Error:', quantization_error)
+        
         # Topographic Error
         def topographic_error(som, data):
             error_count = 0
@@ -305,15 +309,14 @@ with st.expander('Self-Organizing Maps (SOM)'):
                 if abs(bmu1[0] - bmu2[0]) + abs(bmu1[1] - bmu2[1]) > 1:
                     error_count += 1
             return error_count / len(data)
-
+        
         topo_error = topographic_error(som, X_scaled)
         st.write('Topographic Error:', topo_error)
+        
+        # Total Score (lower is better)
+        total_score = quantization_error + topo_error
+        st.write('Total Score (Quantization + Topographic Error):', total_score)
 
-        # Cluster summary
-        df_selected = df_selected.copy()
-        df_selected['Cluster Label'] = som_labels
-        cluster_summary = df_selected.groupby('Cluster Label').describe()
-        st.write('Average of each feature per cluster', cluster_summary)
 
     else:
         st.write("Please select more than one feature to display the scatter plot.")
